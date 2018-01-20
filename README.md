@@ -1,5 +1,5 @@
 # Pixelblaze
-(https://www.bhencke.com/pixelblaze)[https://www.bhencke.com/pixelblaze]
+[https://www.bhencke.com/pixelblaze](https://www.bhencke.com/pixelblaze)
 
 This repo includes a few files related to Pixelblaze. 
 
