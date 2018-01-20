@@ -1,83 +1,137 @@
-	
-Writing Expressions
-========================
+# Table of Contents
 
-Each pixel is run through the given expression. With a bit of math, interesting generated patterns can be created.
+1. [Writing Patterns](#toc_1)
+2. [Supported Language Features](#toc_2)
+3. [Language limitations](#toc_3)
+4. [Variables](#toc_4)
+5. [Constants](#toc_5)
+6. [Functions](#toc_6)
 
-The expression parser follows C precedence conventions. Expressions are parsed, compiled, and run on the fly as you type. Use either `hsv` or `rgb` functions to set a pixel.
+# Writing Patterns
 
-The expression engine runs on 16.16 fixed-point math. This can work on numbers between -32,768 to +32,768 with fractional accuracy down to 1/65,536ths.
+Enter code above, and everything you type is compiled on the fly. If your program is valid, it is sent down to Pixelblaze, and you'll see your changes instantly! Look for syntax or run-time errors in the left sidebar and the status area just below the editor.
 
-The usual math functions are available, as well as a handful of constants.
+Pixelblaze looks for a few exported functions that it can call to generate pixels.
 
-Expressions can span multiple lines, and you can create variables to store intermediate calculations or to make your expression more readable.
+The exported `render(index)` function is called for each pixel in the strip. The `index` argument tells you which pixel is being rendered. Use the `hsv` or `rgb` function to set the current pixel's color.
 
-Evaluation is done depth first, there isn't support for conditional evaluation, though there is support for conditional value. Normally this isn't a problem, but will cause unexpected results if you rely on `&&`, `||` or `? :` to perform an action with side effects.
+The exported `beforeRender(delta)` function is called before it is going to render a new frame of pixels to the strip. The `delta` argument is the number of ellapsed milliseconds (with a resulution of 6.25ns!) since the last time `beforeRender` was called. You can use `delta` to create animations that run at the same speed regardless of the frame rate.
+
+Pixelblaze's language is based off of JavaScript (ES6) syntax, but with a subset of the language features available. All numbers in Pixelblaze are a 16.16 fixed-point numbers. This can handle values between -32,768 to +32,768 with fractional accuracy down to 1/65,536ths.
+
+A global called `pixelCount` is defined based on how many pixels you've configured in settings. You can use this in initialization code or in any function.
+
+
+# Supported Language Features
+
+* All of the usual math operators work. Most work on 16.16 fixed-point math. The bit-wise operators work on the top 16 bits. `=`, `+`, `-`, `!`, `*`, `/`, `%`, `>>`, `<<`, `~`, `^`, `>`, `<`, `>=`, `<=`, `==`, `!=`, `||`, `&&`, `?`
+* Logical operators work like JavaScript and carry over the value, not just a boolean. e.g. `v = 0 || 42` will result in 42. 
+* Trig and other math functions. `abs`, `floor`, `ceil`, `min`, `max`, `clamp`, `sin`, `cos`, `tan`, `asin`, `acos`, `atan`, `atan2`, `sqrt`, `exp`, `log`, `log2`, `pow`, `random`
+* Declare global or function-local variables using `var` or globals implicitly.
+* Use `if` and `else` to have some code run conditionally.
+* Use `while` and `for` for making loops and use `break` and `continue` statements to escape a loop or loop early.
+* Define functions using the `function` keyword or short lambda-style form.
+  * `function myFunction(arg1) {return arg1 * 2}`
+  * `myFunction = (arg1) => arg1 * 2`
+* Functions can be stored in variables, passed as arguments, and returned from other functions. 
+* Create arrays using the `array(size)` function and access them with the bracket syntax. Arrays can be passed around just like any other type.
+
+# Language limitations
+
+This are language features you'd expect to work writing JavaScript that won't run on Pixelblaze. 
+
+* Objects, named properties, classes, etc.
+* Garbage collection or freeing memory. Arrays are currently the only dynamically allocated memory, and you can't (yet) free them once created. 
+* Closures aren't supported, so any function defined in another function won't have access to parameters or local varables. It can still access globals or its own parameters. 
+* `switch` + `case` statements. You can use chained `else if` statements, or put functions in an array and use it as a lookup table.
+
+```
+modes[0] = () => {/* do mode 0 */}; 
+modes[1] = () => {/* do mode 1 */}; 
+// ...
+modes[currentMode]();
+```
+
+* Narrow scoped variables using `let` or read-only variables with `const`
+* Array literals
 
 # Variables
-Some variables are provided for you:
 
-* i = The current pixel index (starting at 0) **Only available in the pixel expression**
-* l = The length of the pixel strip.
-* t = Raw millis()/65536. **WARNING** this easily saturates for usable expressions, use `time()` instead.
+The `pixelCount` variable is available as a global even during initialization. This is the number of LED pixels that have been configured in settings. 
 
-User variables can be created/assigned with the `=` operator. e.g.: `foo = sin(time(0.1,PI2))`
-Precedence for the assignment operator is kinda broken right now, you may need to wrap the right side value in parenthesis if things aren't working as intended.
+Variables can be created/assigned implicitly with the `=` operator. e.g.: `foo = sin(time(0.1,PI2))` or explicitly using the `var` keyword. e.g.: `var foo = 1`.
 
-Variables created in the global expression are available in the pixel expression. This can speed up refresh rates because they are evaluated only once per refresh cycle.
+You can also declare local variables inside functions using the `var` keyword.
+
 
 # Constants
 
 `E` , `PI`, `PI2`, `PI3_4`, `PISQ`, `LN2`, `LN10`, `LOG2E`, `LOG10E`, `SQRT1_2`, `SQRT2`
 
-# Operators
-
-`=`, `+`, `-`, `!`, `*`, `/`, `%`, `>`, `<`, `>=`, `<=`, `==`, `!=`, `||`, `&&`, `?`
-
-*NOTE* test operators result in either 0.0 or 1.0. Any non 0.0 value is considered "truthy" for boolean logic.
-
 # Functions
 
-`abs`, `acos`, `asin`, `atan2`, `atan`, `ceil`, `clamp`, `cos`, `deg_to_rad`, `exp`, `floor`, `hsv`, `lerp`, `log2`, `log`, `max`, `min`, `pow`, `rad_to_deg`, `random`, `rgb`, `sadd`, `sdiv`, `sin_parabola`, `sin`, `slog2`, `smul`, `sq`, `sqrt`, `square`, `ssub`, `tan`, `time`, `triangle`, `wave`
-  
-### hsv(`hue`, `saturation`, `value`)
+### Math Functions
+    
+#### abs(`v`)
+#### acos(`x`)
+#### asin(`x`)
+#### atan(`x`)
+#### atan2(`y`, `x`)
+#### ceil(`v`)
+#### clamp(`value`, `low`, `hi`)
+Clamps `value` such that it isn't less than `low` or greater than `high`
+#### cos(`angleRads`)
+#### exp(`v`)
+#### floor(`v`)
+#### log(`v`)
+#### log2(`v`)
+#### max(`v1`, `v2`)
+#### min(`v1`, `v2`)
+#### pow(`base`, `exponent`)
+#### random(`max`)
+A random number between 0.0 and `max` (exclusive)
+#### sin(`angleRads`)
+#### sqrt(`angleRads`)
+#### tan(`angleRads`)
+    
+### Waveform Functions
+    
+#### time(`interval`)  
+
+A sawtooth waveform between 0.0 and 1.0 that loops about every 65.536*`interval` seconds. e.g. use .015 for an aproximately 1 second.
+#### wave(`v`)
+
+Converts a sawtooth waveform `v` between 0.0 and 1.0 to a sinusoidal waveform between 0.0 to 1.0. Same as `(1+sin(v*PI2))/2` but faster. `v` "wraps" between 0.0 and 1.0.
+#### square(`v`, `duty`)
+Converts a sawtooth waveform `v` to a square wave using the provided `duty` cycle where `duty` is a number between 0.0 and 1.0. `v` "wraps" between 0.0 and 1.0.
+#### triangle(`v`)
+Converts a sawtooth waveform `v` between 0.0 and 1.0 to a triangle waveform between 0.0 to 1.0. `v` "wraps" between 0.0 and 1.0.
+    
+### Pixel / Color Functions
+    
+#### hsv(`hue`, `saturation`, `value`)
+
 Sets the current pixel by calculating the RGB values based on the HSV color space. `Hue` "wraps" between 0.0 and 1.0. Nevative values wrap backwards. 
 
-e.g. 0.9, 1.9, and -0.1 are the same color. `Saturation` and `value` are clampped (saturate, heh) between 0.0 and 1.0.
+#### rgb(`red`, `green`, `blue`)
 
-### rgb(`red`, `green`, `blue`)
-Sets the current pixel using RGB values.
-### clamp (`value`, `low`, `hi`)
-### sadd, ssub, smul, sdiv
-These functions provide saturating arithmetic and won't overflow.
-### lerp(`a`, `b`, `frac`)
-Linear interpolation: (`a` * (1 - `frac`)) + (`b` * `frac`)
+Sets the current pixel to the RGB value provided. Values range between 0.0 and 1.0. 
 
-`frac` is clamped to 0.0 to 1.0
-### random()
-A random number between 0.0 and 1.0 (exclusive)
-### random(`max`)
-A random number between 0.0 and `max` (exclusive)
-### random(`min`, `max`)
-A random number between `min` (inclusive) and `max` (exclusive)
-### time()
-A value between 0.0 and 1.0 that loops about every 32.768 seconds. (Sawtooth waveform)
-### time(`base`)
-A value between 0.0 and 1.0 that loops about every 65.536*`base` seconds. e.g. use .015 for an aproximately 1 second.
-### time(`base`, `magnitude`)
-Same as time(base) * `magnitude`.
-### square(`v`)
-Converts a sawtooth waveform `v` between 0.0 and 1.0 to a square wave between 0.0 and 1.0 at 50% duty cycle.
-### square(`v`, `duty`)
-Converts a sawtooth waveform `v` to a square wave using the provided `duty` cycle where `duty` is a number between 0.0 and 1.0.
-### square(`v`, `duty`, `magnitude`)
-Same as square(`v`, `duty`) * `magnitude`
-### triangle(`v`)
-Converts a sawtooth waveform `v` between 0.0 and 1.0 to a triangle waveform between 0.0 to 1.0.
-### triangle(`v`, `magnitude`)
-Same as triange(`v`) * `magnitude`
-### wave(`v`)
-Converts a sawtooth waveform `v` between 0.0 and 1.0 to a sinusoidal waveform between 0.0 to 1.0. Same as `(1+sin(v*PI2))/2` but faster. `v` "wraps" between 0.0 and 1.0.
-### wave(`v`, `magnitude`)
-Same as wave(`v`) * `magnitude`
+### Input / Output Functions
 
+**NOTE** that GP2 is used for NeoPixel and WS2811/12/13 support and can't be used unless the trace on the bottom is cut.
+
+#### readAdc()
+Reads the value from the ADC as a number between 0.0 and 1.0.
+#### pinMode(`pin`,`mode`)
+Set the pin mode as an `INPUT`, `INPUT_PULLUP`, `INPUT_PULLDOWN_16`, `OUTPUT`, or `OUTPUT_OPEN_DRAIN`.
+
+`INPUT_PULLUP` works for GP2*, GP4, GP5, and GP12 but not for GP16. Useful for buttons, connect between the pin and GND. Pins will read `LOW` or zero while the button is pressed.
+
+`INPUT_PULLDOWN_16` works only for GP16. Can be used with a button, connect between GP16 and 3.3v. Pins will read `HIGH` or 1.0 while the button is pressed.
+
+#### digitalWrite(`pin`,`state`)
+Set a pin `HIGH` or `LOW`. Any non-zero value wil set the pin `HIGH`.
+
+#### digitalRead(`pin`)
+Read a pin state, returns 1.0 if the pin is `HIGH`, 0.0 for `LOW` otherwise.
