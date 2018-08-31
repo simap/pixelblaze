@@ -6,6 +6,7 @@
 4. [Variables](#toc_4)
 5. [Constants](#toc_5)
 6. [Functions](#toc_6)
+7. [Expansion Board](#toc_7)
 
 # Writing Patterns
 
@@ -111,7 +112,11 @@ Converts a sawtooth waveform `v` between 0.0 and 1.0 to a triangle waveform betw
     
 #### hsv(`hue`, `saturation`, `value`)
 
-Sets the current pixel by calculating the RGB values based on the HSV color space. `Hue` "wraps" between 0.0 and 1.0. Nevative values wrap backwards. 
+Sets the current pixel by calculating the RGB values based on the HSV color space. `Hue` "wraps" between 0.0 and 1.0. Nevative values wrap backwards. For LEDs that support it, this uses 24-bit color plus an additional 5 bits of brightness control giving a high dynamic range especially at lower light levels and reduces posterization.
+
+#### hsv24(`hue`, `saturation`, `value`)
+
+Sets the current pixel by calculating the RGB values based on the HSV color space. `Hue` "wraps" between 0.0 and 1.0. Nevative values wrap backwards. This uses 24-bit color only, even if the LEDs support additional resolution and may reduce flickering in some LEDs.
 
 #### rgb(`red`, `green`, `blue`)
 
@@ -135,3 +140,31 @@ Set a pin `HIGH` or `LOW`. Any non-zero value wil set the pin `HIGH`.
 
 #### digitalRead(`pin`)
 Read a pin state, returns 1.0 if the pin is `HIGH`, 0.0 for `LOW` otherwise.
+
+#### touchRead(`pin`)
+Detect touch and proximity on a pin using capacitive sensing techniques. Returns a value between 0.0 and 1.0 depending on how much capacitance is detected on the pin.
+
+# Expansion Board
+
+Pixelblaze supports a sensor expansion board that adds:
+
+* A microphone and signal processing that gives:
+	* `frequencyData` - 32 element array with frequency magnitude data ranging from 12.5-10khz
+	* `energyAverage` - total audio volume
+	* `maxFrequency` and `maxFrequencyMagnitude` - detects the strongest tones with resolution of about 39Hz
+* A 3-axis 16G `accelerometer` - 3 element array with [x,y,z]
+* An ambient light sensor - `light` can be used to automatically dim displays for nightlights
+* 5 `analogInputs` - 5 element array with analog values from A0-A4
+
+Each of these can be accessed in a pattern by using the `export var` syntax, with optional defaults if the board is not connected.
+
+```
+export var frequencyData
+export var energyAverage
+export var maxFrequencyMagnitude
+export var maxFrequency
+export var accelerometer
+export var light
+export var analogInputs
+
+```
