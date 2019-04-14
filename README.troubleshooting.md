@@ -1,7 +1,7 @@
 # Table of Contents
 
 A Pixelblaze is designed to be easy to setup and use, but sometimes things
-don't go quite as expected. Here are some steps for troubleshooting.
+don't go quite as expected. Here are some troubleshooting steps.
 
 1. [Power Supply](#toc_1)
 2. [Runtime Logging](#toc_2)
@@ -12,8 +12,12 @@ don't go quite as expected. Here are some steps for troubleshooting.
 The first thing to check is making sure a Pixelblaze has power. A small blue
 LED should be illuminated or blinking when power is present.
 
-For extra precision, use a volt meter to verify 3.3 volts are being delivered
-to the ESP module.
+To see if it might be a power quality issue, connect a Pixelblaze directly
+to a computer's USB port _by itself_ : No LED strip, no expansion board, and no
+USB hub between computer and Pixelblaze.
+
+If a volt meter is available, use it to verify 3.3 volts are correctly
+delivered to the ESP module.
 
 # Runtime Logging
 
