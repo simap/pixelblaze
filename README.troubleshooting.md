@@ -12,6 +12,8 @@ don't go quite as expected. Here are some troubleshooting steps.
 The first thing to check is making sure a Pixelblaze has power. A small blue
 LED should be illuminated or blinking when power is present.
 
+![Power LED](images/blue_led.jpg)
+
 To see if it might be a power quality issue, connect a Pixelblaze directly
 to a computer's USB port _by itself_ : No LED strip, no expansion board, and no
 USB hub between computer and Pixelblaze.
@@ -19,12 +21,16 @@ USB hub between computer and Pixelblaze.
 If a volt meter is available, use it to verify 3.3 volts are correctly
 delivered to the ESP module.
 
+![Probe ESP Power Pins](images/probe_power.jpg)
+
 # Runtime Logging
 
 If power supply is good, let's look into whether the Pixelblaze is up and
 running like it should be. Connect a 3.3V serial adapter to the serial
 communication pins on its expansion header, open up a terminal program on
 your computer (115200 8N1) and watch for log entries.
+
+![3.3V Serial Adapter](images/serial3v3.jpg)
 
 You should see logging data similar to the following:
 
@@ -65,6 +71,8 @@ Install [esptool](https://github.com/espressif/esptool)
 
 Put a Pixelblaze into bootloader mode. There are several ways to do this,
 the easiest is to hold GP0 low upon power-up.
+
+![Ground GP0](images/ground_gp0.jpg)
 
 Send a simple query (example below asked for `flash_id`) to see if the
 bootloader responds.
