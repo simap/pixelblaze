@@ -28,7 +28,7 @@ export function render2D(index, x, y) {
 Likewise, render3D can produce a HSV volumetric cube showing all color capabilities:
 
 ```
-export function render3D(index, x, y) {
+export function render3D(index, x, y, z) {
 	hsv(x, y, z)
 }
 ```
