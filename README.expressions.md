@@ -60,7 +60,7 @@ modes[currentMode]();
 
 The `pixelCount` variable is available as a global even during initialization. This is the number of LED pixels that have been configured in settings.
 
-Variables can be created/assigned implicitly with the `=` operator. e.g.: `foo = sin(time(0.1,PI2))` or explicitly using the `var` keyword. e.g.: `var foo = 1`.
+Variables can be created/assigned implicitly with the `=` operator. e.g.: `foo = wave(time(0.1))` or explicitly using the `var` keyword. e.g.: `var foo = 1`.
 
 You can also declare local variables inside functions using the `var` keyword.
 
@@ -126,10 +126,11 @@ Sets the current pixel to the RGB value provided. Values range between 0.0 and 1
 
 **NOTE** that GP2 is used for NeoPixel and WS2811/12/13 support and can't be used unless the trace on the bottom is cut.
 
-#### readAdc()
-Reads the value from the ADC as a number between 0.0 and 1.0.
+#### analogRead(`pin`)
+Reads the value from the pin as a number between 0.0 and 1.0.
+
 #### pinMode(`pin`,`mode`)
-Set the pin mode as an `INPUT`, `INPUT_PULLUP`, `INPUT_PULLDOWN_16`, `OUTPUT`, or `OUTPUT_OPEN_DRAIN`.
+Set the pin mode as an `INPUT`, `INPUT_PULLUP`, `INPUT_PULLDOWN`, `OUTPUT`, `OUTPUT_OPEN_DRAIN`, or `ANALOG`.
 
 `INPUT_PULLUP` works for GP2*, GP4, GP5, and GP12 but not for GP16. Useful for buttons, connect between the pin and GND. Pins will read `LOW` or zero while the button is pressed.
 
@@ -142,7 +143,7 @@ Set a pin `HIGH` or `LOW`. Any non-zero value will set the pin `HIGH`.
 Read a pin state, returns 1.0 if the pin is `HIGH`, 0.0 for `LOW` otherwise.
 
 #### touchRead(`pin`)
-Detect touch and proximity on a pin using capacitive sensing techniques. Returns a value between 0.0 and 1.0 depending on how much capacitance is detected on the pin.
+Detect touch and proximity on a pin using capacitive sensing techniques. Returns a value between 0.0 and 1.0 depending on how much capacitance is detected on the pin. You can also specify one of these constants: T0, T2, T4, T6, T7.
 
 # Expansion Board
 
