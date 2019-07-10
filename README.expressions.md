@@ -16,7 +16,7 @@ Pixelblaze looks for a few exported functions that it can call to generate pixel
 
 The exported `render(index)` function is called for each pixel in the strip. The `index` argument tells you which pixel is being rendered. Use the `hsv` or `rgb` function to set the current pixel's color.
 
-The exported `beforeRender(delta)` function is called before it is going to render a new frame of pixels to the strip. The `delta` argument is the number of ellapsed milliseconds (with a resulution of 6.25ns!) since the last time `beforeRender` was called. You can use `delta` to create animations that run at the same speed regardless of the frame rate.
+The exported `beforeRender(delta)` function is called before it is going to render a new frame of pixels to the strip. The `delta` argument is the number of elapsed milliseconds (with a resolution of 6.25ns!) since the last time `beforeRender` was called. You can use `delta` to create animations that run at the same speed regardless of the frame rate.
 
 Pixelblaze's language is based off of JavaScript (ES6) syntax, but with a subset of the language features available. All numbers in Pixelblaze are a 16.16 fixed-point numbers. This can handle values between -32,768 to +32,768 with fractional accuracy down to 1/65,536ths.
 
@@ -26,7 +26,7 @@ A global called `pixelCount` is defined based on how many pixels you've configur
 # Supported Language Features
 
 * All of the usual math operators work. Most work on 16.16 fixed-point math. The bit-wise operators work on the top 16 bits. `=`, `+`, `-`, `!`, `*`, `/`, `%`, `>>`, `<<`, `~`, `^`, `>`, `<`, `>=`, `<=`, `==`, `!=`, `||`, `&&`, `?`
-* Logical operators work like JavaScript and carry over the value, not just a boolean. e.g. `v = 0 || 42` will result in 42. 
+* Logical operators work like JavaScript and carry over the value, not just a boolean. e.g. `v = 0 || 42` will result in 42.
 * Trig and other math functions. `abs`, `floor`, `ceil`, `min`, `max`, `clamp`, `sin`, `cos`, `tan`, `asin`, `acos`, `atan`, `atan2`, `sqrt`, `exp`, `log`, `log2`, `pow`, `random`
 * Declare global or function-local variables using `var` or globals implicitly.
 * Use `if` and `else` to have some code run conditionally.
@@ -34,21 +34,21 @@ A global called `pixelCount` is defined based on how many pixels you've configur
 * Define functions using the `function` keyword or short lambda-style form.
   * `function myFunction(arg1) {return arg1 * 2}`
   * `myFunction = (arg1) => arg1 * 2`
-* Functions can be stored in variables, passed as arguments, and returned from other functions. 
+* Functions can be stored in variables, passed as arguments, and returned from other functions.
 * Create arrays using the `array(size)` function and access them with the bracket syntax. Arrays can be passed around just like any other type.
 
 # Language limitations
 
-This are language features you'd expect to work writing JavaScript that won't run on Pixelblaze. 
+This are language features you'd expect to work writing JavaScript that won't run on Pixelblaze.
 
 * Objects, named properties, classes, etc.
-* Garbage collection or freeing memory. Arrays are currently the only dynamically allocated memory, and you can't (yet) free them once created. 
-* Closures aren't supported, so any function defined in another function won't have access to parameters or local varables. It can still access globals or its own parameters. 
+* Garbage collection or freeing memory. Arrays are currently the only dynamically allocated memory, and you can't (yet) free them once created.
+* Closures aren't supported, so any function defined in another function won't have access to parameters or local variables. It can still access globals or its own parameters.
 * `switch` + `case` statements. You can use chained `else if` statements, or put functions in an array and use it as a lookup table.
 
 ```
-modes[0] = () => {/* do mode 0 */}; 
-modes[1] = () => {/* do mode 1 */}; 
+modes[0] = () => {/* do mode 0 */};
+modes[1] = () => {/* do mode 1 */};
 // ...
 modes[currentMode]();
 ```
@@ -58,7 +58,7 @@ modes[currentMode]();
 
 # Variables
 
-The `pixelCount` variable is available as a global even during initialization. This is the number of LED pixels that have been configured in settings. 
+The `pixelCount` variable is available as a global even during initialization. This is the number of LED pixels that have been configured in settings.
 
 Variables can be created/assigned implicitly with the `=` operator. e.g.: `foo = sin(time(0.1,PI2))` or explicitly using the `var` keyword. e.g.: `var foo = 1`.
 
@@ -72,7 +72,7 @@ You can also declare local variables inside functions using the `var` keyword.
 # Functions
 
 ### Math Functions
-    
+
 #### abs(`v`)
 #### acos(`x`)
 #### asin(`x`)
@@ -94,12 +94,12 @@ A random number between 0.0 and `max` (exclusive)
 #### sin(`angleRads`)
 #### sqrt(`angleRads`)
 #### tan(`angleRads`)
-    
-### Waveform Functions
-    
-#### time(`interval`)  
 
-A sawtooth waveform between 0.0 and 1.0 that loops about every 65.536*`interval` seconds. e.g. use .015 for an aproximately 1 second.
+### Waveform Functions
+
+#### time(`interval`)
+
+A sawtooth waveform between 0.0 and 1.0 that loops about every 65.536*`interval` seconds. e.g. use .015 for an approximately 1 second.
 #### wave(`v`)
 
 Converts a sawtooth waveform `v` between 0.0 and 1.0 to a sinusoidal waveform between 0.0 to 1.0. Same as `(1+sin(v*PI2))/2` but faster. `v` "wraps" between 0.0 and 1.0.
@@ -107,20 +107,20 @@ Converts a sawtooth waveform `v` between 0.0 and 1.0 to a sinusoidal waveform be
 Converts a sawtooth waveform `v` to a square wave using the provided `duty` cycle where `duty` is a number between 0.0 and 1.0. `v` "wraps" between 0.0 and 1.0.
 #### triangle(`v`)
 Converts a sawtooth waveform `v` between 0.0 and 1.0 to a triangle waveform between 0.0 to 1.0. `v` "wraps" between 0.0 and 1.0.
-    
+
 ### Pixel / Color Functions
-    
+
 #### hsv(`hue`, `saturation`, `value`)
 
-Sets the current pixel by calculating the RGB values based on the HSV color space. `Hue` "wraps" between 0.0 and 1.0. Nevative values wrap backwards. For LEDs that support it, this uses 24-bit color plus an additional 5 bits of brightness control giving a high dynamic range especially at lower light levels and reduces posterization.
+Sets the current pixel by calculating the RGB values based on the HSV color space. `Hue` "wraps" between 0.0 and 1.0. Negative values wrap backwards. For LEDs that support it, this uses 24-bit color plus an additional 5 bits of brightness control giving a high dynamic range especially at lower light levels and reduces posterization.
 
 #### hsv24(`hue`, `saturation`, `value`)
 
-Sets the current pixel by calculating the RGB values based on the HSV color space. `Hue` "wraps" between 0.0 and 1.0. Nevative values wrap backwards. This uses 24-bit color only, even if the LEDs support additional resolution and may reduce flickering in some LEDs.
+Sets the current pixel by calculating the RGB values based on the HSV color space. `Hue` "wraps" between 0.0 and 1.0. Negative values wrap backwards. This uses 24-bit color only, even if the LEDs support additional resolution and may reduce flickering in some LEDs.
 
 #### rgb(`red`, `green`, `blue`)
 
-Sets the current pixel to the RGB value provided. Values range between 0.0 and 1.0. 
+Sets the current pixel to the RGB value provided. Values range between 0.0 and 1.0.
 
 ### Input / Output Functions
 
@@ -136,7 +136,7 @@ Set the pin mode as an `INPUT`, `INPUT_PULLUP`, `INPUT_PULLDOWN_16`, `OUTPUT`, o
 `INPUT_PULLDOWN_16` works only for GP16. Can be used with a button, connect between GP16 and 3.3v. Pins will read `HIGH` or 1.0 while the button is pressed.
 
 #### digitalWrite(`pin`,`state`)
-Set a pin `HIGH` or `LOW`. Any non-zero value wil set the pin `HIGH`.
+Set a pin `HIGH` or `LOW`. Any non-zero value will set the pin `HIGH`.
 
 #### digitalRead(`pin`)
 Read a pin state, returns 1.0 if the pin is `HIGH`, 0.0 for `LOW` otherwise.
