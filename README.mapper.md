@@ -9,13 +9,13 @@
 
 The pixel mapper allows you to generate patterns that are aware of the physical LED layout. This can be used for matrix arrays, LED rings, costumes, or pretty much anything you can imagine!
 
-Each pixel is still rendered one at a time, but special render functions take arguments that give coordinate information. The original linear `render(index)` takes just an integer pixel index, but `render2D(index, x, y)` and `render3D(index, x, y, z)` add additional coordinate information in "world units" - a value between 0.0 and 1.0. 
+Each pixel is still rendered one at a time, but special render functions take arguments that give coordinate information. The original linear `render(index)` takes just an integer pixel index, but `render2D(index, x, y)` and `render3D(index, x, y, z)` add additional coordinate information in "world units" - a value between 0.0 and 1.0.
 
-By using "world units" patterns can be written for any possible configuation without having to know the the size of the world.
+By using "world units" patterns can be written for any possible configuration without having to know the size of the world.
 
 The editor automatically scales input coordinates to world units. This lets you enter real physical dimensions, which are automatically converted. As long as you use the same unit, you can input coordinates using inches, millimeters, pixels, etc. The world size will be calculated based on the limits of the map, and the coordinates will be converted to positions inside that world.
 
-# Rendering with Pixel Maps 
+# Rendering with Pixel Maps
 
 To use pixel map data, implement and export a render2D or render3D function. e.g. on a matrix this will show a fading rainbow gradient:
 
@@ -28,7 +28,7 @@ export function render2D(index, x, y) {
 Likewise, render3D can produce a HSV volumetric cube showing all color capabilities:
 
 ```
-export function render3D(index, x, y) {
+export function render3D(index, x, y, z) {
 	hsv(x, y, z)
 }
 ```
@@ -41,7 +41,7 @@ The world units work very similarly to using something like `index/pixelCount`, 
 
 The editor can accept a plain JSON array of arrays or a JavaScript value that evaluates to one. Each element in the top level array represents a pixel. Within a pixel, an array with elements for the x, y, and optionally z coordinate.
 
-For example here is a box with 4 pixels, one in each corner: top left, top right, bottom right, and finally bottom left. 
+For example here is a box with 4 pixels, one in each corner: top left, top right, bottom right, and finally bottom left.
 
 ```
 [
