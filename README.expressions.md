@@ -144,7 +144,21 @@ Read a pin state, returns 1.0 if the pin is `HIGH`, 0.0 for `LOW` otherwise.
 #### touchRead(`pin`)
 Detect touch and proximity on a pin using capacitive sensing techniques. Returns a value between 0.0 and 1.0 depending on how much capacitance is detected on the pin.
 
-# Expansion Board
+### Clock / Time Functions
+
+When the discovery service is enabled and Pixelblaze is connected to the internet, it will know what time it is and these functions can be used.
+
+#### clockYear()
+#### clockMonth()
+#### clockDay()
+#### clockHour()
+24 hour format. `13` = 1pm.
+#### clockMinute()
+#### clockSecond()
+#### clockWeekday()
+Sunday = 1, Monday = 2, etc.
+
+# Sensor Expansion Board
 
 Pixelblaze supports a sensor expansion board that adds:
 
