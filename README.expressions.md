@@ -16,12 +16,58 @@ Pixelblaze looks for a few exported functions that it can call to generate pixel
 
 The exported `render(index)` function is called for each pixel in the strip. The `index` argument tells you which pixel is being rendered. Use the `hsv` or `rgb` function to set the current pixel's color.
 
+Alternative render functions `render2D(index, x, y)` and `render3D(index, x, y, z)` can also be specified to use when a 2D or 3D pixel map is available. Multiple alternatives can be in the same program and the appropriate one will be selected automatically. See the Mapper tab for more info.
+
 The exported `beforeRender(delta)` function is called before it is going to render a new frame of pixels to the strip. The `delta` argument is the number of elapsed milliseconds (with a resolution of 6.25ns!) since the last time `beforeRender` was called. You can use `delta` to create animations that run at the same speed regardless of the frame rate.
 
 Pixelblaze's language is based off of JavaScript (ES6) syntax, but with a subset of the language features available. All numbers in Pixelblaze are a 16.16 fixed-point numbers. This can handle values between -32,768 to +32,768 with fractional accuracy down to 1/65,536ths.
 
 A global called `pixelCount` is defined based on how many pixels you've configured in settings. You can use this in initialization code or in any function.
 
+# Watching Variables
+
+Next to the editor is a **Var Watcher** which will display the value of any variable that has been exported. It works for arrays as well, and will show each element with the corresponding index.
+
+Data from the sensor expansion board can be watched as well. Use this to explore data from ADC inputs, accelerometer, light sensor, or all of the sound analysis data.
+
+The data is only sampled at the end of rendering. If you export a global variable that is modified inside `render()` normally only the last value will be shown. If you want to inspect a bit of data only for a particular pixel index, you can conditionally set that variable. e.g.: `if (index == 42) myExportedVar = someInterestingData`
+
+# User Interface Controls
+
+Sliders and color pickers can be created that will show up when a pattern is active. This can be used to change how the pattern behaves without editing the code. These are persistent and their settings will be preserved across restarts or pattern switches.
+
+### Sliders
+
+To create a slider, export a function that starts with the key word `slider` followed by the name of the slider. CamelCase or snake_case can be used to separate words. For example, to create a slider called "My Slider":
+
+`export function sliderMySlider(v) {...}`
+
+Whenever the slider is moved, this function will be called with a new value between 0.0 and 1.0. It will also be called with a saved value when the pattern is switched to before rendering occurs.
+
+To make use of this you may store the value or use it to calculate something used in your pattern. A common way to do this is to create a variable to hold the value and initialize it with a default value:
+
+```
+var mySetting = 0.5
+export function sliderMySetting(v) {
+	mySetting = v
+}
+```
+
+### Color Pickers
+
+To create a color picker, export a function that starts with the key words `hsvPicker` or `rgbPicker` followed by the name of the color picker. CamelCase or snake_case can be used to separate words. For example, to create a color picker called "Primary Color":
+
+For HSV:
+
+`export function hsvPickerPrimaryColor(h, s, v) {...}`
+
+For RGB:
+
+`export function rgbPickerPrimaryColor(r, g, b) {...}`
+
+This creates a color well that when clicked will open a color picker. When it is changed, this function will be called with either the hue, saturation, and value for `hsvPicker` or the red, green, and blue for `rgbPicker`. All values are between 0.0 and 1.0, and suitable for passing to the `hsv()` or `rgb()` functions later on to set a pixel color.
+
+To make use of this you may store the value or use it to calculate something used in your pattern.
 
 # Supported Language Features
 
@@ -131,9 +177,11 @@ Reads the value from the ADC as a number between 0.0 and 1.0.
 #### pinMode(`pin`,`mode`)
 Set the pin mode as an `INPUT`, `INPUT_PULLUP`, `INPUT_PULLDOWN_16`, `OUTPUT`, or `OUTPUT_OPEN_DRAIN`.
 
-`INPUT_PULLUP` works for GP2*, GP4, GP5, and GP12 but not for GP16. Useful for buttons, connect between the pin and GND. Pins will read `LOW` or zero while the button is pressed.
+`INPUT_PULLUP` works for GP2*, GP4, and GP5 but not for GP16. Useful for buttons, connect between the pin and GND. Pins will read `LOW` or zero while the button is pressed.
 
 `INPUT_PULLDOWN_16` works only for GP16. Can be used with a button, connect between GP16 and 3.3v. Pins will read `HIGH` or 1.0 while the button is pressed.
+
+**NOTE** on Pixelblaze V2+ pin GP12 is connected to the orange LED.
 
 #### digitalWrite(`pin`,`state`)
 Set a pin `HIGH` or `LOW`. Any non-zero value will set the pin `HIGH`.
