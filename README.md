@@ -1,6 +1,8 @@
 # Pixelblaze
 [https://www.bhencke.com/pixelblaze](https://www.bhencke.com/pixelblaze)
 
+[Websocket examples](https://github.com/simap/pixelblaze_websocket_example)
+
 This repo includes a few files related to Pixelblaze.
 
 Pixelblaze itself isn't open source (yet), though some of its components are!
