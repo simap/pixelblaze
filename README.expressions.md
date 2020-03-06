@@ -138,7 +138,7 @@ Clamps `value` such that it isn't less than `low` or greater than `high`
 #### random(`max`)
 A random number between 0.0 and `max` (exclusive)
 #### sin(`angleRads`)
-#### sqrt(`angleRads`)
+#### sqrt(`v`)
 #### tan(`angleRads`)
 
 ### Waveform Functions
