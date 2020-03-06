@@ -71,7 +71,7 @@ To make use of this you may store the value or use it to calculate something use
 
 # Supported Language Features
 
-* All of the usual math operators work. Most work on 16.16 fixed-point math. The bit-wise operators work on the top 16 bits. `=`, `+`, `-`, `!`, `*`, `/`, `%`, `>>`, `<<`, `~`, `^`, `>`, `<`, `>=`, `<=`, `==`, `!=`, `||`, `&&`, `?`
+* All of the usual math operators work. Most work on 16.16 fixed-point math. The bit-wise operators work on the top 16 bits. `=`, `+`, `-`, `!`, `*`, `/`, `%`, `>>`, `<<`, `|`, `&`, `~`, `^`, `>`, `<`, `>=`, `<=`, `==`, `!=`, `||`, `&&`, `?`
 * Logical operators work like JavaScript and carry over the value, not just a boolean. e.g. `v = 0 || 42` will result in 42.
 * Trig and other math functions. `abs`, `floor`, `ceil`, `min`, `max`, `clamp`, `sin`, `cos`, `tan`, `asin`, `acos`, `atan`, `atan2`, `sqrt`, `exp`, `log`, `log2`, `pow`, `random`
 * Declare global or function-local variables using `var` or globals implicitly.
