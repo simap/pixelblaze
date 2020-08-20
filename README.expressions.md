@@ -108,10 +108,13 @@ modes[currentMode]();
 
 The `pixelCount` variable is available as a global even during initialization. This is the number of LED pixels that have been configured in settings.
 
-Variables can be created/assigned implicitly with the `=` operator. e.g.: `foo = wave(time(0.1))` or explicitly using the `var` keyword. e.g.: `var foo = 1`. Implicit variables are global. Explicitly declared variables will either be global or local depending on where they are declared. Variables declared inside a function are in the scope local to that function. Local variables can shadow global variables with the same name.
+Variables can be created/assigned implicitly with the `=` operator. e.g.: `foo = wave(time(0.1))` or explicitly using the `var` keyword. e.g.: `var foo = 1`. 
 
-You can also declare local variables inside functions using the `var` keyword.
+Implicit variables are global. 
 
+Explicitly declared variables will either be global or local depending on where they are declared. Local variables declared using `var` inside a function are visible inside that function. Local variables can shadow global variables with the same name.
+
+Global variables can also be exported with the `export` keyword. These will be visible in the Var Watcher and can be used with the `getVars` and `setVars` [websocket API](https://www.bhencke.com/pixelblaze-advanced#Websocket-API).
 
 # Constants
 
