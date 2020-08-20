@@ -106,7 +106,7 @@ modes[currentMode]();
 
 The `pixelCount` variable is available as a global even during initialization. This is the number of LED pixels that have been configured in settings.
 
-Variables can be created/assigned implicitly with the `=` operator. e.g.: `foo = sin(time(0.1,PI2))` or explicitly using the `var` keyword. e.g.: `var foo = 1`.
+Variables can be created/assigned implicitly with the `=` operator. e.g.: `foo = wave(time(0.1))` or explicitly using the `var` keyword. e.g.: `var foo = 1`. Implicit variables are global. Explicitly declared variables will either be global or local depending on where they are declared. Variables declared inside a function are in the scope local to that function. Local variables can shadow global variables with the same name.
 
 You can also declare local variables inside functions using the `var` keyword.
 
