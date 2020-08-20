@@ -174,14 +174,16 @@ Sets the current pixel to the RGB value provided. Values range between 0.0 and 1
 
 #### readAdc()
 Reads the value from the ADC as a number between 0.0 and 1.0.
+***This function is only available on V2 devices***
+
+#### analogRead(`pin`)
+Reads the value from the pin as a number between 0.0 and 1.0.
+***This function is only available on V3 devices***
+
 #### pinMode(`pin`,`mode`)
-Set the pin mode as an `INPUT`, `INPUT_PULLUP`, `INPUT_PULLDOWN_16`, `OUTPUT`, or `OUTPUT_OPEN_DRAIN`.
+Set the pin mode as an `INPUT`, `INPUT_PULLUP`, `INPUT_PULLDOWN`, `OUTPUT`, `OUTPUT_OPEN_DRAIN`, or `ANALOG`.
 
-`INPUT_PULLUP` works for GP2*, GP4, and GP5 but not for GP16. Useful for buttons, connect between the pin and GND. Pins will read `LOW` or zero while the button is pressed.
-
-`INPUT_PULLDOWN_16` works only for GP16. Can be used with a button, connect between GP16 and 3.3v. Pins will read `HIGH` or 1.0 while the button is pressed.
-
-**NOTE** on Pixelblaze V2+ pin GP12 is connected to the orange LED.
+***V2 device notes:*** `INPUT_PULLUP` does not work for GP16, instead `INPUT_PULLDOWN_16` is supported. This can be used with a button, connect between GP16 and 3.3v. Pins will read `HIGH` or 1.0 while the button is pressed. On Pixelblaze V2+ pin GP12 is connected to the orange LED.
 
 #### digitalWrite(`pin`,`state`)
 Set a pin `HIGH` or `LOW`. Any non-zero value will set the pin `HIGH`.
@@ -190,7 +192,23 @@ Set a pin `HIGH` or `LOW`. Any non-zero value will set the pin `HIGH`.
 Read a pin state, returns 1.0 if the pin is `HIGH`, 0.0 for `LOW` otherwise.
 
 #### touchRead(`pin`)
-Detect touch and proximity on a pin using capacitive sensing techniques. Returns a value between 0.0 and 1.0 depending on how much capacitance is detected on the pin.
+Detect touch and proximity on a pin using capacitive sensing techniques. Returns a value between 0.0 and 1.0 depending on how much capacitance is detected on the pin. 
+
+***V3 device notes:*** You can also specify one of these constants: T0, T2, T4, T6, T7.
+
+### Clock / Time Functions
+
+When the discovery service is enabled and Pixelblaze is connected to the internet, it will know what time it is and these functions can be used.
+
+#### clockYear()
+#### clockMonth()
+#### clockDay()
+#### clockHour()
+24 hour format. `13` = 1pm.
+#### clockMinute()
+#### clockSecond()
+#### clockWeekday()
+Sunday = 1, Monday = 2, etc.
 
 ### Clock / Time Functions
 
