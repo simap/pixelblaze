@@ -1,12 +1,14 @@
 # Table of Contents
 
 1. [Writing Patterns](#toc_1)
-2. [Supported Language Features](#toc_2)
-3. [Language limitations](#toc_3)
-4. [Variables](#toc_4)
-5. [Constants](#toc_5)
-6. [Functions](#toc_6)
-7. [Expansion Board](#toc_7)
+2. [Watching Variables](#toc_2)
+3. [User Interface Controls](#toc_3)
+2. [Supported Language Features](#toc_6)
+3. [Language limitations](#toc_7)
+4. [Variables](#toc_8)
+5. [Constants](#toc_9)
+6. [Functions](#toc_10)
+7. [Expansion Board](#toc_63)
 
 # Writing Patterns
 
@@ -113,7 +115,7 @@ You can also declare local variables inside functions using the `var` keyword.
 
 # Constants
 
-`E` , `PI`, `PI2`, `PI3_4`, `PISQ`, `LN2`, `LN10`, `LOG2E`, `LOG10E`, `SQRT1_2`, `SQRT2`
+`E` , `PI`, `PI2` (PI * 2), `PI3_4` (PI * 3 / 4), `PISQ` (PI * PI), `LN2`, `LN10`, `LOG2E`, `LOG10E`, `SQRT1_2`, `SQRT2`
 
 # Functions
 
@@ -146,6 +148,9 @@ A random number between 0.0 and `max` (exclusive)
 #### time(`interval`)
 
 A sawtooth waveform between 0.0 and 1.0 that loops about every 65.536*`interval` seconds. e.g. use .015 for an approximately 1 second.
+
+Patterns using this can be synchronized across the network using either [Firestorm](https://github.com/simap/Firestorm), or a when conecting to a Pixelblaze in AP mode.
+
 #### wave(`v`)
 
 Converts a sawtooth waveform `v` between 0.0 and 1.0 to a sinusoidal waveform between 0.0 to 1.0. Same as `(1+sin(v*PI2))/2` but faster. `v` "wraps" between 0.0 and 1.0.
@@ -170,8 +175,6 @@ Sets the current pixel to the RGB value provided. Values range between 0.0 and 1
 
 ### Input / Output Functions
 
-**NOTE** that GP2 is used for NeoPixel and WS2811/12/13 support and can't be used unless the trace on the bottom is cut.
-
 #### readAdc()
 Reads the value from the ADC as a number between 0.0 and 1.0.
 ***This function is only available on V2 devices***
@@ -183,7 +186,7 @@ Reads the value from the pin as a number between 0.0 and 1.0.
 #### pinMode(`pin`,`mode`)
 Set the pin mode as an `INPUT`, `INPUT_PULLUP`, `INPUT_PULLDOWN`, `OUTPUT`, `OUTPUT_OPEN_DRAIN`, or `ANALOG`.
 
-***V2 device notes:*** `INPUT_PULLUP` does not work for GP16, instead `INPUT_PULLDOWN_16` is supported. This can be used with a button, connect between GP16 and 3.3v. Pins will read `HIGH` or 1.0 while the button is pressed. On Pixelblaze V2+ pin GP12 is connected to the orange LED.
+***V2 device notes:*** `INPUT_PULLUP` does not work for GP16, instead `INPUT_PULLDOWN_16` is supported. This can be used with a button, connect between GP16 and 3.3v. Pins will read `HIGH` or 1.0 while the button is pressed. On Pixelblaze V2+ pin GP12 is connected to the orange LED. GP2 is used for NeoPixel and WS2811/12/13 support and can't be used unless the trace on the bottom is cut.
 
 #### digitalWrite(`pin`,`state`)
 Set a pin `HIGH` or `LOW`. Any non-zero value will set the pin `HIGH`.
