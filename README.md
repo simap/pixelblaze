@@ -32,6 +32,7 @@ Pixelblaze Related GitHub Projects:
 * [https://github.com/Roger-random/glowflow](https://github.com/Roger-random/glowflow) - Interactive light sculpture filled with virtual liquid
 * [https://github.com/alejandrosame/pixelblaze-animations](https://github.com/alejandrosame/pixelblaze-animations) Patterns and pure-browser emulation with visualizers 
 * [https://github.com/derwentx/js-pixelblaze-expander](https://github.com/derwentx/js-pixelblaze-expander) A NodeJS Library for controlling the Output Expander / Serial to 8x LED Drivers
+* [https://github.com/bosporos/libpbx](https://github.com/bosporos/libpbx) A C library for controlling the Output Expander / Serial to 8x LED Drivers
 * [https://github.com/zranger1/hubitatpixelblazedriver](https://github.com/zranger1/hubitatpixelblazedriver) Hubitat Elevation device handler for the Pixelblaze
 
 
