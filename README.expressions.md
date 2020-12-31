@@ -22,7 +22,7 @@ Alternative render functions `render2D(index, x, y)` and `render3D(index, x, y, 
 
 The exported `beforeRender(delta)` function is called before it is going to render a new frame of pixels to the strip. The `delta` argument is the number of elapsed milliseconds (with a resolution of 6.25ns!) since the last time `beforeRender` was called. You can use `delta` to create animations that run at the same speed regardless of the frame rate.
 
-Pixelblaze's language is based off of JavaScript (ES6) syntax, but with a subset of the language features available. All numbers in Pixelblaze are a 16.16 fixed-point numbers. This can handle values between -32,768 to +32,768 with fractional accuracy down to 1/65,536ths.
+Pixelblaze's language is based on JavaScript (ES6) syntax, but with a subset of the language features available. All numbers in Pixelblaze are 16.16 fixed-point numbers. This can handle values between -32,768 to +32,768 with fractional accuracy down to 1/65,536ths.
 
 A global called `pixelCount` is defined based on how many pixels you've configured in settings. You can use this in initialization code or in any function.
 
@@ -73,7 +73,7 @@ To make use of this you may store the value or use it to calculate something use
 
 # Supported Language Features
 
-* All of the usual math operators work. Most work on 16.16 fixed-point math. The bit-wise operators work on the top 16 bits. `=`, `+`, `-`, `!`, `*`, `/`, `%`, `>>`, `<<`, `|`, `&`, `~`, `^`, `>`, `<`, `>=`, `<=`, `==`, `!=`, `||`, `&&`, `?`
+* All of the usual math operators work. Most work on 16.16 fixed-point math. `=`, `+`, `-`, `!`, `*`, `/`, `%`, `>>`, `<<`, `|`, `&`, `~`, `^`, `>`, `<`, `>=`, `<=`, `==`, `!=`, `||`, `&&`, `?`. Most bitwise operators work on all 16 bits, which is different from JavaScript. The exception is `~` which zeros out the lower 16 bits.
 * Logical operators work like JavaScript and carry over the value, not just a boolean. e.g. `v = 0 || 42` will result in 42.
 * Trig and other math functions. `abs`, `floor`, `ceil`, `min`, `max`, `clamp`, `sin`, `cos`, `tan`, `asin`, `acos`, `atan`, `atan2`, `sqrt`, `exp`, `log`, `log2`, `pow`, `random`
 * Declare global or function-local variables using `var` or globals implicitly.
@@ -106,7 +106,7 @@ modes[currentMode]();
 
 # Variables
 
-The `pixelCount` variable is available as a global even during initialization. This is the number of LED pixels that have been configured in settings.
+The `pixelCount` variable is available as a global even during initialization. This is the number of LED pixels that have been configured in settings. 
 
 Variables can be created/assigned implicitly with the `=` operator. e.g.: `foo = wave(time(0.1))` or explicitly using the `var` keyword. e.g.: `var foo = 1`. 
 
@@ -125,26 +125,85 @@ Global variables can also be exported with the `export` keyword. These will be v
 ### Math Functions
 
 #### abs(`v`)
+Returns the absolute value. `abs(-2) == 2`
 #### acos(`x`)
+Returns the arccosine (in radians) of a number.
 #### asin(`x`)
+Returns the arcsine (in radians) of a number.
 #### atan(`x`)
+Returns the arctangent (in radians) of a number.
 #### atan2(`y`, `x`)
+This returns the angle (in radians) between the positive x axis and the line to the point `(x, y)`.
 #### ceil(`v`)
+Rounds up to the next largest integer. `ceil(5.1) == 6`, `ceil(-5.9) == -5`
 #### clamp(`value`, `low`, `hi`)
 Clamps `value` such that it isn't less than `low` or greater than `high`
 #### cos(`angleRads`)
-#### exp(`v`)
+Returns the cosine of the specified angle (in radians).
+#### exp(`x`)
+Returns e<sup>x</sup>, where x is the argument, and e is Euler's number.
 #### floor(`v`)
+Rounds down to the next smallest integer. `floor(5.9) == 5`, `floor(-5.1) == -6`
+#### frac
+Returns the fractional component of a number. `frac(5.5) == 0.5`, `frac(-5.5) == -0.5`
+#### hypot(`x`,`y`)
+Calculate the square root of the sum of the squares of x and y, which is the hypotenuse of a right triangle with sides `x` and `y`, and the distance of the point `(x,y)` from the origin `(0,0)`. `hypot(3, 4) == 5`
+#### hypot3(`x`,`y`,`z`)
+Calculate the distance of the point `(x,y,z)` from the origin `(0,0,0)`.
 #### log(`v`)
+Returns the natural logarithm (base e) of a number.
 #### log2(`v`)
+Returns the base 2 logarithm of a number. `log2(256) == 8`
 #### max(`v1`, `v2`)
+Returns the larger of two numbers.
 #### min(`v1`, `v2`)
+Returns the smaller of two numbers.
+#### mod(`x`,`y`)
+The floored remainder of the division `x/y`. The result uses the same sign as `y`. For example `mod(-3.5, 3) == 2.5` whereas `-3.5 % 3 == -.5`. This provides the same "wrapping" behavior used in the animation functions like `triangle` when `y` == 1.
 #### pow(`base`, `exponent`)
+Returns the `base` to the `exponent` power, that is, base<sup>exponent</sup>. `pow(10,2) == 100`
 #### random(`max`)
-A random number between 0.0 and `max` (exclusive)
+A random number between 0.0 and `max` (exclusive).
+#### round(`v`)
+Returns the value of a number rounded to the nearest integer.
 #### sin(`angleRads`)
+Returns the sine of an angle (in radians).
 #### sqrt(`v`)
+Returns the square root of a number. `sqrt(9) == 3`
 #### tan(`angleRads`)
+Returns the tangent of an angle (in radians).
+#### trunc
+Returns the integer component of a number. `trunc(5.5) == 5`, `trunc(-5.5) == -5`
+
+### Array Functions
+
+Array functions can also be accessed as methods and arrays support the read-only length property.
+
+#### array(`n`)
+Create a new array with `n` elements.
+#### arrayForEach(`a`, `fn`) ↔️ `a`.forEach(`fn`)
+Iterate over an array and call `fn(value, index, array)` for each element.
+#### arrayLength(`a`) ↔️ `a`.length
+Return the length/size of an array. Note that the `a`.length form is not a function call.
+#### arrayMapTo(`src`, `dest`, `fn`) ↔️ `src`.mapTo(`dest`, `fn`)
+Iterate over the `src` array and call `fn(value, index, array)` for each element. Return values are then stored in `dest`. The `dest` array may be smaller than `src`, in which case extra results are calculated and then discarded.
+#### arrayMutate(`a`, `fn`) ↔️ `a`.mutate(`fn`)
+Modify an array in place by calling `fn(value, index, array)` for each element and storing the return values.
+#### arrayReduce(`a`, `fn`, `initialValue`) ↔️ `a`.reduce(`fn`, `initialValue`)
+Returns a value by calling `fn(accumulator, value, index, array)` (the reducer) for each element of the array, resulting in a single value (the accumulator). The `accumulator` parameter is seeded with `initialValue` and updated with the return value from each call to `fn`.
+Examples:
+
+* Sum: `arrayReduce(a, (acc, v) => acc + v, 0)`
+* Max: `arrayReduce(a, (acc, v) => max(acc,v), a[0])`
+* Count instances: `key = 5; arrayReduce(a, (acc, v) => acc + (v == key), 0)`
+* Index of closest: `target = 5; arrayReduce(a, (acc, v, i, a) => abs(target - v) < abs(target - a[acc]) ? i : acc , 0)`
+
+#### arraySort(`a`) ↔️ `a`.sort()
+Sort an array of numbers in ascending order.
+#### arraySortBy(`a`, `fn`) ↔️ `a`.sortBy(`fn`)
+Sort an array using `fn(v1, v2)` to compare element values. The compare function should return a negative number if `v1` is less than `v2`. The order of equal elements is not guaranteed to be preserved.
+#### arraySum(`a`) ↔️ `a`.sum()
+Returns the sum of all elements in an array. Tip: this can be used to calculate an average: `average = arraySum(a) / arrayLength(a)`
 
 ### Waveform Functions
 
@@ -152,7 +211,7 @@ A random number between 0.0 and `max` (exclusive)
 
 A sawtooth waveform between 0.0 and 1.0 that loops about every 65.536*`interval` seconds. e.g. use .015 for an approximately 1 second.
 
-Patterns using this can be synchronized across the network using either [Firestorm](https://github.com/simap/Firestorm), or a when conecting to a Pixelblaze in AP mode.
+Patterns using this can be synchronized across the network using either [Firestorm](https://github.com/simap/Firestorm), or when connecting to a Pixelblaze in AP mode.
 
 #### wave(`v`)
 
@@ -189,7 +248,7 @@ Reads the value from the pin as a number between 0.0 and 1.0.
 #### pinMode(`pin`,`mode`)
 Set the pin mode as an `INPUT`, `INPUT_PULLUP`, `INPUT_PULLDOWN`, `OUTPUT`, `OUTPUT_OPEN_DRAIN`, or `ANALOG`.
 
-***V2 device notes:*** `INPUT_PULLUP` does not work for GP16, instead `INPUT_PULLDOWN_16` is supported. This can be used with a button, connect between GP16 and 3.3v. Pins will read `HIGH` or 1.0 while the button is pressed. On Pixelblaze V2+ pin GP12 is connected to the orange LED. GP2 is used for NeoPixel and WS2811/12/13 support and can't be used unless the trace on the bottom is cut.
+***V2 device notes:*** `INPUT_PULLUP` does not work for GP16, instead `INPUT_PULLDOWN_16` is supported. This can be used with a button, connected between GP16 and 3.3v. Pins will read `HIGH` or 1.0 while the button is pressed. On Pixelblaze V2+ pin GP12 is connected to the orange LED. GP2 is used for NeoPixel and WS2811/12/13 support and can't be used unless the trace on the bottom is cut.
 
 #### digitalWrite(`pin`,`state`)
 Set a pin `HIGH` or `LOW`. Any non-zero value will set the pin `HIGH`.
@@ -254,3 +313,5 @@ export var light
 export var analogInputs
 
 ```
+
+
