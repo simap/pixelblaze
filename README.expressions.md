@@ -8,7 +8,7 @@
 4. [Variables](#toc_8)
 5. [Constants](#toc_9)
 6. [Functions](#toc_10)
-7. [Expansion Board](#toc_63)
+7. [Expansion Board](#toc_79)
 
 # Writing Patterns
 
@@ -260,20 +260,6 @@ Read a pin state, returns 1.0 if the pin is `HIGH`, 0.0 for `LOW` otherwise.
 Detect touch and proximity on a pin using capacitive sensing techniques. Returns a value between 0.0 and 1.0 depending on how much capacitance is detected on the pin. 
 
 ***V3 device notes:*** You can also specify one of these constants: T0, T2, T4, T6, T7.
-
-### Clock / Time Functions
-
-When the discovery service is enabled and Pixelblaze is connected to the internet, it will know what time it is and these functions can be used.
-
-#### clockYear()
-#### clockMonth()
-#### clockDay()
-#### clockHour()
-24 hour format. `13` = 1pm.
-#### clockMinute()
-#### clockSecond()
-#### clockWeekday()
-Sunday = 1, Monday = 2, etc.
 
 ### Clock / Time Functions
 
