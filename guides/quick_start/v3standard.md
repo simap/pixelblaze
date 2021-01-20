@@ -30,7 +30,7 @@ img.full {
 
 Connect Pixelblaze to USB power, or provide 5V via the connection header.
 
-<strong class="warning">WA:</strong> Never connect both USB and external power at the same time!
+<strong class="warning">WARNING:</strong> Never connect both USB and external power at the same time!
 
 When you power up your Pixelblaze, it will go in to WiFi setup mode. Look for a new wireless network called Pixelblaze_XXXXXX. If you do not see it, sometimes turning WiFi off and back on on your device can help.
 
