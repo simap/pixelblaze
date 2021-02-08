@@ -28,7 +28,7 @@ img.full {
 
 # <a name="step1"></a>Step 1: WiFi Setup
 
-Connect Pixelblaze to USB power, or provide 5V via the connection header.
+Connect Pixelblaze to USB power, or provide 5V via the LED connection header.
 
 <strong class="warning">WARNING:</strong> Never connect both USB and external power at the same time!
 
