@@ -2,6 +2,8 @@
 
 This repo includes open source information related to [Pixelblaze](https://www.bhencke.com/pixelblaze).
 
+**Setup and Guides:** https://electromage.com/setup
+
 Community:
 
 * [Forums](https://forum.electromage.com/)
