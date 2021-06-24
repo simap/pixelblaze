@@ -100,15 +100,25 @@ If you are editing an existing pattern, **Save** will become an **Update** butto
 The mapper tab allows you specify the position of your LEDs in 2D or 3D space, so you write patterns in terms of x, y, and z instead of the pixel index. Learn more on the [Mapping page](https://www.bhencke.com/mapping-in-pixelblaze).
 
 ### Settings
-Here you can change settings related to the LED strip.
 
-The Pixels setting controls how many pixels will be generated. Since these are calculated as they are sent out, very large strips can be supported with modest frame rates.
+Here you can change settings related to the LED strip and other options.
 
-Pick the LED Type corresponding to the type of pixels you’ve connected.
 
-The Data Speed controls how fast data is sent out to the strip. Faster speeds may improve frame rates, but if you experience flickering, try a lower Data Speed.
+Setting | Description
+------------- | -------------
+Name | You can name your Pixelblaze, making it easier to find. This is shown on the discovery service page, and in Firestorm.
+Limit Brightness | You can limit the brightness to a specific percentage here. This works in comination with the global brightness slider, and can be used to limit power draw.
+Pixels | The Pixels setting controls how many pixels will be generated. Since these are calculated as they are sent out, very large strips can be supported with modest frame rates.
+Led Type | Pick the LED Type corresponding to the type of pixels you’ve connected. If you are using an Output Expander, select that option here. You can also select "No LEDs" and work via the live preview.
+Pixels | The Pixels setting controls how many pixels will be generated. If your animations aren't making it all the way to the end, this is most likely the setting you need to adjust.
+Data Speed | Some LED types can accept various data speeds. If you experience flickering or glitches, try differente Data Speed values. Higher values usually result in smoother animations, but may not work with all LEDs, or over long distances.
+Color Order | The Color Order determines what is red, green, or blue, and if you have 4-element LEDs with a white LED. If your colors don't match the live preview, try different values here. For RGBW LEDs, you can choose between using the white element, or skipping it with the "-W" variants.
+Output Expander Configuration | If using the Output Expander, you can configure each board here. Click `Add Board` if no panels are shown. Each board's address and individual channels can be configured with a type, start index, count, and options like color order.
+Discovery Service | If you want to use the discovery service, or want to use any of the time/clock functions, leave this enabled. When enabled, Pixelblaze will report it's local IP and get the time once an hour.
+Time Zone | For time/clock functions, this is used to localize the times to your time zone.
+Auto Off Timer | You can use this setting to turn the LEDs off at night, and back on in the morning/evening. The LEDs will be turned off if the current time is after the `Dark at` setting or before the `Resume at` setting.
 
-The Color Order can be used to correct color issues with different versions of LEDs.
+You can also check for version updates when Pixelblaze is connected to the internet. Click `Check for Update` and if a new version is available the `Perform Update and Restart` button will be enabled. Once started, the status will be displayed and Pixelblaze will restart with the new version automatically.
 
 ### WiFi
 
