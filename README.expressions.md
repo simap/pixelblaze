@@ -8,7 +8,7 @@
 4. [Variables](#toc_8)
 5. [Constants](#toc_9)
 6. [Functions](#toc_10)
-7. [Expansion Board](#toc_79)
+7. [Expansion Board](#toc_82)
 
 # Writing Patterns
 
@@ -73,7 +73,7 @@ To make use of this you may store the value or use it to calculate something use
 
 # Supported Language Features
 
-* All of the usual math operators work. Most work on 16.16 fixed-point math. `=`, `+`, `-`, `!`, `*`, `/`, `%`, `>>`, `<<`, `|`, `&`, `~`, `^`, `>`, `<`, `>=`, `<=`, `==`, `!=`, `||`, `&&`, `?`. Most bitwise operators work on all 16 bits, which is different from JavaScript. The exception is `~` which zeros out the lower 16 bits.
+* All of the usual math operators work. Most work on 16.16 fixed-point math. `=`, `+`, `-`, `!`, `*`, `/`, `%`, `>>`, `<<`, `|`, `&`, `~`, `^`, `>`, `<`, `>=`, `<=`, `==`, `!=`, `||`, `&&`, `?`. Most bitwise operators work on all 32 bits (16 in the integer part, and 16 in the fractional part), which is different from JavaScript. The exception is `~` which zeros out the lower 16 bits.
 * Logical operators work like JavaScript and carry over the value, not just a boolean. e.g. `v = 0 || 42` will result in 42.
 * Trig and other math functions. `abs`, `floor`, `ceil`, `min`, `max`, `clamp`, `sin`, `cos`, `tan`, `asin`, `acos`, `atan`, `atan2`, `sqrt`, `exp`, `log`, `log2`, `pow`, `random`
 * Declare global or function-local variables using `var` or globals implicitly.
@@ -87,7 +87,7 @@ To make use of this you may store the value or use it to calculate something use
 
 # Language limitations
 
-This are language features you'd expect to work writing JavaScript that won't run on Pixelblaze.
+These are language features you'd expect to work writing JavaScript that won't run on Pixelblaze.
 
 * Objects, named properties, classes, etc.
 * Garbage collection or freeing memory. Arrays are currently the only dynamically allocated memory, and you can't (yet) free them once created.
@@ -209,7 +209,7 @@ Returns the sum of all elements in an array. Tip: this can be used to calculate 
 
 #### time(`interval`)
 
-A sawtooth waveform between 0.0 and 1.0 that loops about every 65.536*`interval` seconds. e.g. use .015 for an approximately 1 second.
+A sawtooth waveform between 0.0 and 1.0 that loops about every 65.536*`interval` seconds. e.g. use .015 for approximately 1 second.
 
 Patterns using this can be synchronized across the network using either [Firestorm](https://github.com/simap/Firestorm), or when connecting to a Pixelblaze in AP mode.
 
@@ -234,6 +234,41 @@ Sets the current pixel by calculating the RGB values based on the HSV color spac
 #### rgb(`red`, `green`, `blue`)
 
 Sets the current pixel to the RGB value provided. Values range between 0.0 and 1.0.
+
+### Coordinate Transformation Functions
+
+Coordinate transformations allow you to manipulate the pixel map coordinates by translating (moving), scaling, and rotating. Up to 31 transformations can be applied. These APIs affect the next render cycle, and can be called in `beforeRender` or in the main body of code.
+
+#### resetTransform()
+Resets coordinate transforms to the default. Use this before setting up new transformations.
+
+#### transform(m11, m21, m31, m41, m12, m22, m32, m42, m13, m23, m33, m43, m14, m24, m34, m44)
+Applies an arbitrary 4x4 matrix transform.
+
+#### translate(`x`, `y`)
+Move in 2D space.
+
+#### scale(`x`,`y`)
+Scale in 2D space. This increases the density of pixels, such that `scale(2,2)` will cause things to appear half as large.
+
+#### rotate(`angleRads`)
+Rotate 2D space (around the Z axis), by an angle (in radians).
+
+#### translate3D(`x`, `y`, `z`)
+Move in 3D space.
+
+#### scale3D(`x`, `y`, `z`)
+Scale in 3D space. This increases the density of pixels, such that `scale3D(2,2,2)` will cause things to appear half as large.
+
+#### rotateX(`angleRads `)
+Rotate 3D space around the X axis by an angle (in radians).
+
+#### rotateY(`angleRads `)
+Rotate 3D space around the Y axis by an angle (in radians).
+
+#### rotateZ(`angleRads `)
+Rotate 3D space around the Z axis by an angle (in radians).
+
 
 ### Input / Output Functions
 
@@ -299,5 +334,7 @@ export var light
 export var analogInputs
 
 ```
+
+
 
 
