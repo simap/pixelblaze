@@ -26,7 +26,7 @@ The controller supports the fast, high dynamic range APA102/SK9822 (AKA Adafruit
 
 The APA102/SK9822 LEDs are recommended. The modules usually have 4 input pins or wires: 2 for power, 1 for clock, and one for data. These can come in a wide variety of styles and markings. These have integrated controllers, so you won't see a separate IC controlling the LEDS, it's built in. Here are some pictures of various strips:
 
-<img class="full" src="strip1.jpg">
+<img class="full" src="./strip1.jpg">
 <img class="full" src="strip2.jpg">
 <img class="full" src="strip3.jpg">
 
