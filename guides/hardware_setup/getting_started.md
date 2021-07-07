@@ -27,8 +27,8 @@ The controller supports the fast, high dynamic range APA102/SK9822 (AKA Adafruit
 The APA102/SK9822 LEDs are recommended. The modules usually have 4 input pins or wires: 2 for power, 1 for clock, and one for data. These can come in a wide variety of styles and markings. These have integrated controllers, so you won't see a separate IC controlling the LEDS, it's built in. Here are some pictures of various strips:
 
 <img class="full" src="./strip1.jpg">
-<img class="full" src="strip2.jpg">
-<img class="full" src="strip3.jpg">
+<img class="full" src="./strip2.jpg">
+<img class="full" src="./strip3.jpg">
 
 ### WS2812 Type LEDs
 
@@ -60,7 +60,7 @@ The controller and strip can be powered from the micro USB connector. The USB po
 
 For example, 30 pixels of full-brightness white (R+G+B) with may draw 30 * (20ma + 20ma + 20ma) = 1.8A, enough to max out the USB connector. However, many patterns will not draw this much and brightness can be reduced in settings to limit current draw. It is possible to drive hundreds of LEDs from USB power without exceeding limits.
 
-<img class="full" src="v3_standard_USB.jpg">
+<img class="full" src="./v3_standard_USB.jpg">
 
 <strong class="warning">WARNING:</strong> Never connect both USB and external power at the same time!
 
@@ -70,7 +70,7 @@ If your power requirements exceed the USB connector or USB power supply capabili
 
 If you supply power to the LED strip, often you can backfeed this to the LED connection header and power the controller this way without needing USB power. If you do connect power in this way, you shouldn't connect USB power. The controller will draw power from the strip's power supply. This method works best for larger systems of LEDs that require more power than USB can provide.
 
-<img class="full" src="v3_standard_No_USB_.jpg">
+<img class="full" src="./v3_standard_No_USB_.jpg">
 
 <strong class="warning">WARNING:</strong> Never connect both USB and external power at the same time!
 
@@ -91,15 +91,15 @@ Likewise the clock and data signals are often abbreviated as `C` and `D`. `SDI` 
 
 #### Examples
 
-<img class="full" src="v3_standard_strip1.jpg">
+<img class="full" src="./v3_standard_strip1.jpg">
 
 In the above example there's no arrow, so we need to use the labeling to figure out which end is the input. The CI indicates "clock in" and is connected to CLK, whereas DI indicates "data in" and is connected to DAT.
 
-<img class="full" src="v3_standard_strip2.jpg">
+<img class="full" src="./v3_standard_strip2.jpg">
 
 In this example, there is no indicator for 5v, but the other pins are labeled. The wiring would be straight across if the pixels were face down, but that wouldn't make for a very interesting picture, so all of the connections are reversed.
 
-<img class="full" src="v3pico_direct.jpg">
+<img class="full" src="./v3pico_direct.jpg">
 
 The Pixeblaze V3 Pico can be soldered directly to many APA102 type LED strips. Power can be provided using the through hole connections, while the strip is soldered using the castellated edges.
 
