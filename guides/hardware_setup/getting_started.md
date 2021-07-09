@@ -70,7 +70,7 @@ If your power requirements exceed the USB connector or USB power supply capabili
 
 If you supply power to the LED strip, often you can backfeed this to the LED connection header and power the controller this way without needing USB power. If you do connect power in this way, you shouldn't connect USB power. The controller will draw power from the strip's power supply. This method works best for larger systems of LEDs that require more power than USB can provide.
 
-<img class="full" src="./v3_standard_No_USB_.jpg">
+<img class="full" src="./v3_standard_No_USB.jpg">
 
 <strong class="warning">WARNING:</strong> Never connect both USB and external power at the same time!
 
