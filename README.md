@@ -36,6 +36,8 @@ Pixelblaze Related GitHub Projects:
 * [https://github.com/derwentx/js-pixelblaze-expander](https://github.com/derwentx/js-pixelblaze-expander) A NodeJS Library for controlling the Output Expander / Serial to 8x LED Drivers
 * [https://github.com/bosporos/libpbx](https://github.com/bosporos/libpbx) A C library for controlling the Output Expander / Serial to 8x LED Drivers
 * [https://github.com/zranger1/hubitatpixelblazedriver](https://github.com/zranger1/hubitatpixelblazedriver) Hubitat Elevation device handler for the Pixelblaze
+* [https://github.com/zranger1/pixelblaze-client](https://github.com/zranger1/pixelblaze-client) Pixelblaze client library for Python by ZRanger1
+* [https://github.com/NickWaterton/Pixelblaze-Async](https://github.com/NickWaterton/Pixelblaze-Async) Async Pixelblaze client library for Python by NickWaterton 
 
 
 Additional Licenses:
