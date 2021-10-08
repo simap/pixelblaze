@@ -8,7 +8,7 @@
 4. [Variables](#toc_8)
 5. [Constants](#toc_9)
 6. [Functions](#toc_10)
-7. [Expansion Board](#toc_82)
+7. [Expansion Board](#toc_84)
 
 # Writing Patterns
 
@@ -197,6 +197,12 @@ Examples:
 * Max: `arrayReduce(a, (acc, v) => max(acc,v), a[0])`
 * Count instances: `key = 5; arrayReduce(a, (acc, v) => acc + (v == key), 0)`
 * Index of closest: `target = 5; arrayReduce(a, (acc, v, i, a) => abs(target - v) < abs(target - a[acc]) ? i : acc , 0)`
+
+#### arrayReplace(`a`, ...) ↔️ `a`.replace(...)
+Replace the elements of an array with any number of arguments, starting at index 0. The argument list must fit into the array. If the array is larger than the arguments, the remaining array elements are unchanged.
+
+#### arrayReplaceAt(`a`, offset, ...) ↔️ `a`.replace(offset, ...)
+Replace some elements of an array with any number of arguments, starting at `offset`. The argument list must fit into the array at the given `offset`. The other array elements are unchanged.
 
 #### arraySort(`a`) ↔️ `a`.sort()
 Sort an array of numbers in ascending order.
