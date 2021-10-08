@@ -83,7 +83,7 @@ To make use of this you may store the value or use it to calculate something use
   * `function myFunction(arg1) {return arg1 * 2}`
   * `myFunction = (arg1) => arg1 * 2`
 * Functions can be stored in variables, passed as arguments, and returned from other functions.
-* Create arrays using the `array(size)` function and access them with the bracket syntax. Arrays can be passed around just like any other type.
+* Create arrays using the `array(size)` function or array literals and access them with the bracket syntax. Arrays can be passed around just like any other type.
 
 # Language limitations
 
@@ -102,7 +102,6 @@ modes[currentMode]();
 ```
 
 * Narrow scoped variables using `let` or read-only variables with `const`
-* Array literals
 
 # Variables
 
