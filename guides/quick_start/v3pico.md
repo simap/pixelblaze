@@ -24,7 +24,7 @@ img.full {
 }
 </style>
 
-<img src="PB V3 Pico pins.jpg" alt="Pixelblaze V3 Pico Connections" class="full">
+<img src="PB_V3_Pico_pins.jpg" alt="Pixelblaze V3 Pico Connections" class="full">
 
 # <a name="step1"></a>Step 1: Connect LEDs / Power
 

@@ -24,7 +24,7 @@ img.full {
 }
 </style>
 
-<img src="PB V3 Standard left pins.jpg" alt="Pixelblaze V3 Standard Connections" class="full">
+<img src="PB_V3_Standard_left_pins.jpg" alt="Pixelblaze V3 Standard Connections" class="full">
 
 # <a name="step1"></a>Step 1: WiFi Setup
 
