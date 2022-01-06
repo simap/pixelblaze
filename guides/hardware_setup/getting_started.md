@@ -32,7 +32,7 @@ The APA102/SK9822 LEDs are recommended. The modules usually have 4 input pins or
 
 ### WS2812 Type LEDs
 
-WS2812 (AKA Adafruit's NeoPixel) and compatible LEDs like the WS2811, WS2813, WS2815, and SK6812 are also supported. Some of these require 12V, and in these setups will require separate 5V power for Pixelblaze.
+WS2812 (AKA Adafruit's NeoPixel) and compatible LEDs like the WS2811, WS2813, WS2815, and SK6812 are also supported. Some of these require 12V, and in these setups will require separate 5V power for Pixelblaze either via the VIN/GND pins or USB.  Never connect 12V to the Pixelblaze's VIN pin.
 
 RGBW variants are also supported with a white element.
 
@@ -74,7 +74,7 @@ If you supply power to the LED strip, often you can backfeed this to the LED con
 
 <strong class="warning">WARNING:</strong> Never connect both USB and external power at the same time!
 
-If you are using 12V LEDs, a separate 5V supply is needed for Pixelblaze. The GND signal must be connected between the separate power supplies for data to the pixels to work.
+If you are using 12V LEDs, a separate 5V supply is needed for Pixelblaze. The GND signal must be connected between the separate power supplies for data to the pixels to work.  The 5V supply can either be provided via the VIN/GND pins or using USB as a power source.
 
 ## Connecting the LEDs
 
