@@ -102,14 +102,14 @@ Connect both DAT and CLK signals.
 
 ### For WS2811 / WS2812 / WS2813 / WS2815 / SK6812 LEDs
 
-Connect the DAT or DI signal. If the LED strip supports a backup data channel, typically labeled BI, it can also be connected to the DATA signal to provide redundancy.
+Connect the DAT or DI signal. 
 
-For 12V LEDs like the WS2815 and some WS2811 strips, you will need both a 12V and 5V power supply.
+If the LED strip supports a backup data channel, typically labeled BI, it should be connected to GND. Keep the wire handy, if the first LED dies you can swap it to DATA to bypass the first pixel. You may connect BI to DATA anyway, but some types of LEDs with a backup input get confused when a data signal arrives on BI before the first LED has forwarded some data.
+
+For 12V LEDs like the WS2815 and some WS2811 strips, you will need both a 12V and 5V power supply. Alternatively, use the [12V version of our Output Expander Pro](https://shop.electromage.com/products/pixelblaze-pro-output-expander-pro-8x-ws2812-apa102-led-driver), which has a built-in converter for powering Pixelblaze.
 
 Connect the 12V supply directly to the LED strip.  The 5V supply can be connected to the VIN / GND connections or you can use a USB power source.
 
 The 12V supply's GND connection must be connected to the Pixelblaze as a common ground is required for communications with the LED strip to work.
 
-The 12V supply ***must never be connected to the Pixelblaze's VIN pin***.
-
-
+The 12V supply ***should never be connected to the Pixelblaze's VIN pin***.
