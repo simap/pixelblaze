@@ -1,7 +1,7 @@
 Pixelblaze V3 Standard: Quick Start
 ===============
 
-This guide covers getting Pixelblaze up and running in 3 steps:
+Get up and running in 3 easy steps!
 
 1. [WiFi Setup](#step1)
 1. [Configure Settings](#step2)
@@ -28,9 +28,9 @@ img.full {
 
 # <a name="step1"></a>Step 1: WiFi Setup
 
-Connect Pixelblaze to USB power, or provide 5V via the LED connection header.
+Connect Pixelblaze to USB power, or provide 5V via the VIN and GND pins on the LED connection header.
 
-<strong class="warning">WARNING:</strong> Never connect both USB and external power at the same time!
+<strong class="warning">WARNING:</strong> ***Never connect both USB and external power at the same time!***
 
 When you power up your Pixelblaze, it will go in to WiFi setup mode. Look for a new wireless network called Pixelblaze_XXXXXX. If you do not see it, sometimes turning WiFi off and back on on your device can help.
 
@@ -102,6 +102,14 @@ Connect both DAT and CLK signals.
 
 ### For WS2811 / WS2812 / WS2813 / WS2815 / SK6812 LEDs
 
-Connect the DAT signal. If the LED supports a backup data signal, connect the first pixel's backup data input to GND.
+Connect the DAT or DI signal. If the LED strip supports a backup data channel, typically labeled BI, it can also be connected to the DATA signal to provide redundancy.
 
-For 12V LEDs like the WS2815 and some WS2811 strings, a separate power supply is needed to provide 5V to Pixelblaze. A common ground (GND) between the LED power supply and Pixelblaze must be connected.
+For 12V LEDs like the WS2815 and some WS2811 strips, you will need both a 12V and 5V power supply.
+
+Connect the 12V supply directly to the LED strip.  The 5V supply can be connected to the VIN / GND connections or you can use a USB power source.
+
+The 12V supply's GND connection must be connected to the Pixelblaze as a common ground is required for communications with the LED strip to work.
+
+The 12V supply ***must never be connected to the Pixelblaze's VIN pin***.
+
+

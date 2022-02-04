@@ -47,7 +47,7 @@ Connect both DAT and CLK signals. Pixelblaze V3 Pico's castellated edges are pin
 
 Connect the DAT signal. If the LED supports a backup data signal, connect the first pixel's backup data input to GND.
 
-<strong class="warning">WARNING:</strong> Connecting 12V to Pixelblaze V3 Pico will permanently damage the controller. For 12V LEDs like the WS2815 and some WS2811 strings, a separate power supply is needed to provide 5V to Pixelblaze. A common ground (GND) between the LED power supply and Pixelblaze must be connected.
+<strong class="warning">WARNING:</strong> Connecting 12V to Pixelblaze V3 Pico will permanently damage the controller. For 12V LEDs like the WS2815 and some WS2811 strings, a separate power supply is needed to provide 5V to Pixelblaze. A common ground (GND) between the LED power supply and Pixelblaze must be connected.  The 5V supply must either be connected to the Pixelblaze V3 Pico's VIN/GND pins.
 
 
 # <a name="step2"></a>Step 2: WiFi Setup
