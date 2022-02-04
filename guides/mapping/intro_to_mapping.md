@@ -14,7 +14,7 @@ pre {
 
 img.full {
 	width: 100%;
-	max-width: 600px;
+	max-width: 850px;
 }
 .two-up {
 	display: inline-block;
@@ -42,7 +42,7 @@ Each of these projects could use the same 2D pattern code even though they have 
 
 A map assigns each pixel a position in space. The map is a JSON array of x, y, and optionally z coordinates. For example, imagine you had wired up a 3-by-3 matrix consisting of 9 total pixels. If you mounted each pixel 3 cm apart from each other, it’s natural to think of the middle pixel as being located at (3, 3).
 
-<img src="pixelblaze_mapping_example_1.jpg" alt="Map example 1: 3x3 Matrix wired zig-zag, and array of integer [x,y] coordinates">
+<img class="full" src="pixelblaze_mapping_example_1.jpg" alt="Map example 1: 3x3 Matrix wired zig-zag, and array of integer [x,y] coordinates">
 
 Unlike the Cartesian plane in geometry where the y axis is oriented upwards, it’s a convention in computer graphics to think of the top-left as the (0, 0) origin, and y gets bigger in the downward direction.
 
@@ -60,15 +60,15 @@ You don’t have to define the map as an array literal like this. You can write 
 <img src="map_example_volumetric_cube.png" alt="Pixelblaze Mapping tab, with example code for an 8x8 matrix" class="two-up">
 So how could patterns intended for a small square matrix also display on a giant curtain? The answer is that every map has its coordinates auto-scaled to “world units” between 0 and 1. Those scaled values are then passed into the pattern code. Therefore, all 2D/3D patterns are written to expect x, y, and z to be between 0 and 1. In the 9 pixel array example above, the (6, 3) coordinate specified will be scaled to a value very close to (1, 0.5) when provided to the render2D() function. 
 
-<img src="pixelblaze_mapping_example_2.jpg" alt="Map example 2: The fourth pixel, index 3, showing how the position on the right side in the middle row would have map coordinate [6,3] translated to x near 1 and y near .5 in the render2d(index, x, y) function.">
+<img class="full" src="pixelblaze_mapping_example_2.jpg" alt="Map example 2: The fourth pixel, index 3, showing how the position on the right side in the middle row would have map coordinate [6,3] translated to x near 1 and y near .5 in the render2d(index, x, y) function.">
 
 To see why this is better, let’s write a pattern that will make a green arrow pointing to the top left. Without a mapper, you might be tempted to do something clever that only works for your 3x3, like this:
 
-<img src="green_arrow_without_map.jpg" alt="Showing the manual way to illuminate the LEDs to make a right angle arrow shape on a 3x3 matrix">
+<img class="full" src="green_arrow_without_map.jpg" alt="Showing the manual way to illuminate the LEDs to make a right angle arrow shape on a 3x3 matrix">
 
 Using the mapper, you get to think of your pattern more like a field that flows through your project’s LEDs.
 
-<img src="green_arrow_with_map.jpg" alt="Showing the more abstracted way to form the arrow shape on any size matrix by illuminating pixels where global 0..1 coordinates fulfilling the inequality x + y < 1.1">
+<img class="full" src="green_arrow_with_map.jpg" alt="Showing the more abstracted way to form the arrow shape on any size matrix by illuminating pixels where global 0..1 coordinates fulfilling the inequality x + y < 1.1">
 
 When you define things this way, it’s much easier to adapt any pattern to work on other projects. For example, here’s the exact same pattern (x + y < 1.1) on a 3x3 and an 8x8.
 
