@@ -3,12 +3,12 @@
 1. [Writing Patterns](#toc_1)
 2. [Watching Variables](#toc_2)
 3. [User Interface Controls](#toc_3)
-2. [Supported Language Features](#toc_6)
-3. [Language limitations](#toc_7)
-4. [Variables](#toc_8)
-5. [Constants](#toc_9)
-6. [Functions](#toc_10)
-7. [Expansion Board](#toc_84)
+2. [Supported Language Features](#toc_11)
+3. [Language limitations](#toc_12)
+4. [Variables](#toc_13)
+5. [Constants](#toc_14)
+6. [Functions](#toc_15)
+7. [Expansion Board](#toc_89)
 
 # Writing Patterns
 
@@ -36,11 +36,19 @@ The data is only sampled at the end of rendering. If you export a global variabl
 
 # User Interface Controls
 
-Sliders and color pickers can be created that will show up when a pattern is active. This can be used to change how the pattern behaves without editing the code. These are persistent and their settings will be preserved across restarts or pattern switches.
+Custom interface controls can be created that will show up when a pattern is active. This can be used to change how the pattern behaves without editing the code. These are persistent and their settings will be preserved across restarts or pattern switches.
 
-### Sliders
+Some controls allow input, while others can be used to display some information.
 
-To create a slider, export a function that starts with the key word `slider` followed by the name of the slider. CamelCase or snake_case can be used to separate words. For example, to create a slider called "My Slider":
+Create a control by exporting a function with a special name prefix (see below), folowed by the name you would like to use. CamelCase or snake_case can be used to separate words.
+
+Whenever input controls are changed, the function will be called with the new value. It will also be called with a saved value when the pattern is switched to before rendering occurs. To make use of this you may store the value or use it to calculate something used in your pattern.
+
+Output controls work by calling the function and using the return value. These may be called very frequently to refresh the interface.
+
+### Range Sliders
+
+To create a slider, export a function that starts with the key word `slider` followed by the name of the slider. For example, to create a slider called "My Slider":
 
 `export function sliderMySlider(v) {...}`
 
@@ -57,7 +65,7 @@ export function sliderMySetting(v) {
 
 ### Color Pickers
 
-To create a color picker, export a function that starts with the key words `hsvPicker` or `rgbPicker` followed by the name of the color picker. CamelCase or snake_case can be used to separate words. For example, to create a color picker called "Primary Color":
+To create a color picker, export a function that starts with the key words `hsvPicker` or `rgbPicker` followed by the name of the color picker. For example, to create a color picker called "Primary Color":
 
 For HSV:
 
@@ -69,7 +77,45 @@ For RGB:
 
 This creates a color well that when clicked will open a color picker. When it is changed, this function will be called with either the hue, saturation, and value for `hsvPicker` or the red, green, and blue for `rgbPicker`. All values are between 0.0 and 1.0, and suitable for passing to the `hsv()` or `rgb()` functions later on to set a pixel color.
 
-To make use of this you may store the value or use it to calculate something used in your pattern.
+### Toggle Switches
+
+To create a toggle switch, export a function that starts with the key word `toggle` followed by the name of the toggle switch. For example, to create a toggle switch called "Enable Awesomeness":
+
+`export function toggleEnableAwesomeness(isEnabled) {...}`
+
+Whenever the toggle is toggled on or off, this function will be called with a value of `true` (1) when turned on and `false` (0) when turned off.
+
+### Trigger Buttons
+
+To create a trigger button, export a function that starts with the key word `trigger` followed by the name of the button. For example, to create a button called "Fire Lasers":
+
+`export function triggerFireLasers() {...}`
+
+Whenever the button is pressed, this function will be called. Unlike other input controls, this has no parameters and is not called when the patter first loads.
+
+### Inputs for Numbers
+
+To create an input for accepting numbers, export a function that starts with the key word `inputNumber` followed by the name of the input. For example, to create a input called "Scale":
+
+`export function inputNumberScale(v) {...}`
+
+Whenever a number is entered, this function will be called with the new value. Any positive or negative number, either whole or a decimal is allowed. It will also be called with a saved value when the pattern is switched to before rendering occurs.
+
+### Showing Numbers
+
+To show a number, export a function that starts with the key word `showNumber` followed by the name. For example, to display a number called "Energy Average":
+
+`export function showNumberEnergyAverage() {return ...}`
+
+The returned number can be any number, and will be displayed with 4 digits after the decimal point. This function will be called frequently to update the interface. 
+
+### Gauges
+
+To show a gauge, export a function that starts with the key word `gauge` followed by the name. For example, to display a gague called "Light Level":
+
+`export function gaugeLightLevel() {return ...}`
+
+The returned number should be between 0.0 and 1.0 and are scaled as percentages. Values outside of this range are OK, but will be clamped to the minimum or maximum. This function will be called frequently to update the interface.
 
 # Supported Language Features
 
@@ -105,13 +151,13 @@ modes[currentMode]();
 
 # Variables
 
-The `pixelCount` variable is available as a global even during initialization. This is the number of LED pixels that have been configured in settings. 
+The `pixelCount` variable is available as a global even during initialization. This is the number of LED pixels that have been configured in settings.
 
-Variables can be created/assigned implicitly with the `=` operator. e.g.: `foo = wave(time(0.1))` or explicitly using the `var` keyword. e.g.: `var foo = 1`. 
-
-Implicit variables are global. 
+Variables can be created/assigned implicitly with the `=` operator. e.g.: `foo = wave(time(0.1))` or explicitly using the `var` keyword. e.g.: `var foo = 1`.
 
 Explicitly declared variables will either be global or local depending on where they are declared. Local variables declared using `var` inside a function are visible inside that function. Local variables can shadow global variables with the same name.
+
+Implicitly defined variables are always globally scoped, even if first assigned inside a function. e.g.: `function() {bar = 123}` will define `bar` as a global while `function() {var baz = 123}` defines `baz` as a local variable since it uses the `var` keyword inside a function.
 
 Global variables can also be exported with the `export` keyword. These will be visible in the Var Watcher and can be used with the `getVars` and `setVars` [websocket API](https://www.bhencke.com/pixelblaze-advanced#Websocket-API).
 
@@ -148,7 +194,7 @@ Returns the fractional component of a number. `frac(5.5) == 0.5`, `frac(-5.5) ==
 #### hypot(`x`,`y`)
 Calculate the square root of the sum of the squares of x and y, which is the hypotenuse of a right triangle with sides `x` and `y`, and the distance of the point `(x,y)` from the origin `(0,0)`. `hypot(3, 4) == 5`
 #### hypot3(`x`,`y`,`z`)
-Calculate the distance of the point `(x,y,z)` from the origin `(0,0,0)`.
+Calculate the square root of the sum of the squares of x, y, and z. This can be used to find the distance of the point `(x,y,z)` from the origin `(0,0,0)`.
 #### log(`v`)
 Returns the natural logarithm (base e) of a number.
 #### log2(`v`)
