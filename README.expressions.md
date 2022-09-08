@@ -1,14 +1,14 @@
 # Table of Contents
 
-1. [Writing Patterns](#toc_1)
-2. [Watching Variables](#toc_2)
-3. [User Interface Controls](#toc_3)
-2. [Supported Language Features](#toc_11)
-3. [Language limitations](#toc_12)
-4. [Variables](#toc_13)
-5. [Constants](#toc_14)
-6. [Functions](#toc_15)
-7. [Expansion Board](#toc_89)
+1. [Writing Patterns](#writing-patterns)
+2. [Watching Variables](#watching-variables)
+3. [User Interface Controls](#user-interface-controls)
+4. [Supported Language Features](#supported-language-features)
+5. [Language limitations](#language-limitations)
+6. [Variables](#variables)
+7. [Constants](#constants)
+8. [Functions](#functions)
+9. [Sensor Expansion Board](#sensor-expansion-board)
 
 # Writing Patterns
 
