@@ -189,7 +189,7 @@ Returns the cosine of the specified angle (in radians).
 Returns e<sup>x</sup>, where x is the argument, and e is Euler's number.
 #### floor(`v`)
 Rounds down to the next smallest integer. `floor(5.9) == 5`, `floor(-5.1) == -6`
-#### frac
+#### frac(`v`)
 Returns the fractional component of a number. `frac(5.5) == 0.5`, `frac(-5.5) == -0.5`
 #### hypot(`x`,`y`)
 Calculate the square root of the sum of the squares of x and y, which is the hypotenuse of a right triangle with sides `x` and `y`, and the distance of the point `(x,y)` from the origin `(0,0)`. `hypot(3, 4) == 5`
@@ -217,7 +217,7 @@ Returns the sine of an angle (in radians).
 Returns the square root of a number. `sqrt(9) == 3`
 #### tan(`angleRads`)
 Returns the tangent of an angle (in radians).
-#### trunc
+#### trunc(`v`)
 Returns the integer component of a number. `trunc(5.5) == 5`, `trunc(-5.5) == -5`
 
 ### Array Functions
@@ -246,7 +246,7 @@ Examples:
 #### arrayReplace(`a`, ...) ↔️ `a`.replace(...)
 Replace the elements of an array with any number of arguments, starting at index 0. The argument list must fit into the array. If the array is larger than the arguments, the remaining array elements are unchanged.
 
-#### arrayReplaceAt(`a`, offset, ...) ↔️ `a`.replace(offset, ...)
+#### arrayReplaceAt(`a`, `offset`, ...) ↔️ `a`.replace(`offset`, ...)
 Replace some elements of an array with any number of arguments, starting at `offset`. The argument list must fit into the array at the given `offset`. The other array elements are unchanged.
 
 #### arraySort(`a`) ↔️ `a`.sort()
@@ -286,6 +286,23 @@ Sets the current pixel by calculating the RGB values based on the HSV color spac
 
 Sets the current pixel to the RGB value provided. Values range between 0.0 and 1.0.
 
+#### setPalette(`array`)
+
+Sets the palette to a gradient based on an array of positions and RGB values. For example, this fades from black to magenta to cyan:
+
+```
+var rgbGradient = [
+  0,    0, 0, 0, //position start, rgb(0,0,0)
+  0.75, 1, 0, 1, //position 75%, rgb(1,0,1)
+  1,    0, 1, 1  // position end, rgb(0,1,1)
+]
+setPalette(rgbGradient)
+```
+
+#### paint(`value`, [`brightness = 1`])
+
+Sets the current pixel to a color based on the value's position in the current palette. Optionally `brightness` can be specified.
+
 ### Coordinate Transformation Functions
 
 Coordinate transformations allow you to manipulate the pixel map coordinates by translating (moving), scaling, and rotating. Up to 31 transformations can be applied. These APIs affect the next render cycle, and can be called in `beforeRender` or in the main body of code.
@@ -293,7 +310,7 @@ Coordinate transformations allow you to manipulate the pixel map coordinates by 
 #### resetTransform()
 Resets coordinate transforms to the default. Use this before setting up new transformations.
 
-#### transform(m11, m21, m31, m41, m12, m22, m32, m42, m13, m23, m33, m43, m14, m24, m34, m44)
+#### transform(`m11`, `m21`, `m31`, `m41`, `m12`, `m22`, `m32`, `m42`, `m13`, `m23`, `m33`, `m43`, `m14`, `m24`, `m34`, `m44`)
 Applies an arbitrary 4x4 matrix transform.
 
 #### translate(`x`, `y`)
