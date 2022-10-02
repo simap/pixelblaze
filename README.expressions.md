@@ -8,7 +8,7 @@
 4. [Variables](#toc_13)
 5. [Constants](#toc_14)
 6. [Functions](#toc_15)
-7. [Expansion Board](#toc_89)
+7. [Expansion Board](#toc_100)
 
 # Writing Patterns
 
@@ -272,6 +272,18 @@ Converts a sawtooth waveform `v` to a square wave using the provided `duty` cycl
 #### triangle(`v`)
 Converts a sawtooth waveform `v` between 0.0 and 1.0 to a triangle waveform between 0.0 to 1.0. `v` "wraps" between 0.0 and 1.0.
 
+#### mix(`low`, `high`, `weight`)
+Returns linear interpolation between `low` and `high` given a `weight` between 0.0 and 1.0.
+
+#### smoothstep(`low`, `high`, `v`)
+Returns a smooth Hermite interpolation between 0.0 and 1.0 based on `v` crossing between `low` and `high` thresholds. `High` must be >= `low`, `v` may exceed this range and clamps at 0.0 or 1.0 respectively. This can be used to ease in and out while comparing a value in an arbitrary range.
+
+#### bezierQuadratic(`t`, `p0`, `p1`, `p2`)
+Return a quadratic bezier curve at `t` given the start point `p0`, control point `p1` and end point `p2`.
+
+#### bezierCubic(`t`, `p0`, `p1`, `p2`)
+Return a cubic bezier curve at `t` given the start point `p0`, control points `p1`, `p2`, and end point `p3`.
+
 ### Pixel / Color Functions
 
 #### hsv(`hue`, `saturation`, `value`)
@@ -301,7 +313,7 @@ setPalette(rgbGradient)
 
 #### paint(`value`, [`brightness = 1`])
 
-Sets the current pixel to a color based on the value's position in the current palette. Optionally `brightness` can be specified.
+Sets the current pixel to a color based on the `value`'s position in the current palette. `Value` "wraps" between 0.0 and 1.0. Negative values wrap backwards. Optionally `brightness` can be specified. 
 
 ### Coordinate Transformation Functions
 
@@ -337,6 +349,21 @@ Rotate 3D space around the Y axis by an angle (in radians).
 #### rotateZ(`angleRads `)
 Rotate 3D space around the Z axis by an angle (in radians).
 
+### Pixel Map Functions
+
+#### pixelMapDimensions()
+Return the number of dimensions in the pixel map, e.g. 2 for 2D, or 0 for no map.
+
+#### has2DMap()
+Returns true if there is a 2D pixel map.
+
+#### has3DMap()
+Returns true if there is a 3D pixel map.
+
+#### mapPixels(`fn`)
+Walk through the pixels with pixel map coordinates. The given `fn` is invoked with 4 arguments: (`index`, `x`, `y`, `z`). If no pixel map is installed, `x` will be the same as `index/pixelCount`, and `y` and `z` will be 0. For 2D pixel maps `z` will be 0.
+
+For 2D and 3D maps the current coordinate transformations are applied before `fn` is called.
 
 ### Input / Output Functions
 
