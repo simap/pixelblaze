@@ -1,0 +1,11 @@
+The Pixelblaze guides have moved!
+
+Please see our new documentation at:
+
+https://electromage.com/docs
+
+
+The guides were previously hosted here to encourage community submissions and
+edits. If you'd like to submit any, please reach us at:
+
+support@electromage.com

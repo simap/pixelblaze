@@ -5,7 +5,7 @@ This repo includes open source information related to [Pixelblaze](https://www.b
 * [Pattern code Reference](README.expressions.md)
 * [Mapper code Reference](README.mapper.md)
 
-**Setup and Guides:** https://electromage.com/setup
+**Setup, Guides and Documentation:** https://electromage.com/docs
 
 Community:
 
