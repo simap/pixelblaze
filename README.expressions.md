@@ -8,7 +8,7 @@
 4. [Variables](#toc_13)
 5. [Constants](#toc_14)
 6. [Functions](#toc_15)
-7. [Expansion Board](#toc_100)
+7. [Expansion Board](#toc_109)
 
 # Writing Patterns
 
@@ -207,8 +207,12 @@ Returns the smaller of two numbers.
 The floored remainder of the division `x/y`. The result uses the same sign as `y`. For example `mod(-3.5, 3) == 2.5` whereas `-3.5 % 3 == -.5`. This provides the same "wrapping" behavior used in the animation functions like `triangle` when `y` == 1.
 #### pow(`base`, `exponent`)
 Returns the `base` to the `exponent` power, that is, base<sup>exponent</sup>. `pow(10,2) == 100`
+#### prng(`max`)
+A pseudorandom number generator for values between 0.0 and `max` (exclusive). Given the same initial seed with `prngSeed()`, calls to `prng()` produce the same sequence of numbers.
+#### prngSeed(`seed`)
+Set a seed for use with `prng()`. The old seed is returned.
 #### random(`max`)
-A random number between 0.0 and `max` (exclusive).
+A true random number between 0.0 and `max` (exclusive).
 #### round(`v`)
 Returns the value of a number rounded to the nearest integer.
 #### sin(`angleRads`)
@@ -283,6 +287,21 @@ Return a quadratic bezier curve at `t` given the start point `p0`, control point
 
 #### bezierCubic(`t`, `p0`, `p1`, `p2`)
 Return a cubic bezier curve at `t` given the start point `p0`, control points `p1`, `p2`, and end point `p3`.
+
+#### perlin(`x`, `y`, `z`, `seed`)
+Generate 3D Perlin noise. Every integer value produces a different random result, with smooth transitions between them. The values will repeat every 256 or as specified with `setPerlinWrap()`, and will seamlessly wrap.
+
+#### perlinFbm(`x`, `y`, `z`, `lacunarity`, `gain`, `octaves`)
+Generate 3D fractal Perlin noise (fractial Brownian Motion). The values will repeat every 256 or as specified with `setPerlinWrap()`, and can seamlessly wrap. The `lacunarity` controls the distance between octaves and should be set to 2 or another integer value if wrapping is desired. The `gain` controls the strength between each octave, try values around 0.5-0.8. 
+
+#### perlinRidge(`x`, `y`, `z`, `lacunarity`, `gain`, `offset`, `octaves`)
+Generate 3D fractal ridged Perlin noise. The values will repeat every 256 or as specified with `setPerlinWrap()`, and can seamlessly wrap. The `lacunarity` controls the distance between octaves and should be set to 2 or another integer value if wrapping is desired. The `gain` controls the strength between each octave, try values around 0.5-0.8. The `offset` is used to invert the ridges, values around 1.0 work well.
+
+#### perlinTurbulence(`x`, `y`, `z`, `lacunarity`, `gain`, `octaves`)
+Generate 3D fractal turbulent Perlin noise. The values will repeat every 256 or as specified with `setPerlinWrap()`, and can seamlessly wrap. The `lacunarity` controls the distance between octaves and should be set to 2 or another integer value if wrapping is desired. The `gain` controls the strength between each octave, try values around 0.5-0.8. 
+
+#### setPerlinWrap(`x`, `y`, `z`)
+Causes perlin functions to wrap at the given integer intervals between 2 and 256. Useful for creating textures that can repeat smoothly, while controlling density.
 
 ### Pixel / Color Functions
 
@@ -404,6 +423,11 @@ When the discovery service is enabled and Pixelblaze is connected to the interne
 #### clockSecond()
 #### clockWeekday()
 Sunday = 1, Monday = 2, etc.
+
+### Sync Group Functions
+
+#### nodeId()
+Returns the integer node ID as configured in settings. This can be used to change the behavior within a group.
 
 # Sensor Expansion Board
 
