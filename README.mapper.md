@@ -76,6 +76,8 @@ function (pixelCount) {
 }
 ```
 
+This code snippet can generate a pixel map for many kinds of LED matrices by using the `width` variable in combination with the pixelCount which is configured in Settings and passed in to this function. The height is calculated automatically, or rather it keeps adding rows of `width` size until pixelCount is reached.
+
 # Rendering with Pixel Maps
 
 Once a pixel map is configured, patterns can start using the coordinate information in pattern code.
