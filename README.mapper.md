@@ -1,45 +1,45 @@
 # Table of Contents
 
-1. [Using the Pixel Mapper](#toc_1)
-2. [Rendering with Pixel Maps](#toc_2)
-3. [JSON Array Map](#toc_3)
-4. [Generated Map Using Javascript](#toc_4)
+1. [Pixel Mapping System Overview](#toc_1)
+2. [Coordinate World Units](#toc_2)
+3. [Using the Map Editor](#toc_3)
+4. [Map Using a JSON Array](#toc_4)
+5. [Map Using JavaScript](#toc_5)
+6. [Rendering with Pixel Maps](#toc_6)
 
-# Using the Pixel Mapper
+# Pixel Mapping System Overview
 
-The pixel mapper allows you to generate patterns that are aware of the physical LED layout. This can be used for matrix arrays, LED rings, costumes, or pretty much anything you can imagine!
+The pixel mapping system allows you to generate patterns that are aware of the physical LED layout. This can be used for matrix arrays, LED rings, costumes, or pretty much anything you can imagine! Patterns that support 2D and/or 3D can usually be used with any physical pixel layout without modification because they scale to the size of the mapped world.
 
-Each pixel is still rendered one at a time, but special render functions take arguments that give coordinate information. The original linear `render(index)` takes just an integer pixel index, but `render2D(index, x, y)` and `render3D(index, x, y, z)` add additional coordinate information in "world units" - a value between 0.0 and 1.0.
+First, you need a pixel map. This tells the system what the coordinates are for each pixel. This can be either a pair of coordinates for 2D mapping, or a triplet for 3D mapping. More details on how to specify these maps is provided below.
 
-By using "world units" patterns can be written for any possible configuration without having to know the size of the world.
+Once you have a pixel map saved on the Mapper tab, patterns can then start using these coordinates by having a `render2D(index, x, y)` and/or `render3D(index, x, y, z)` function, which will be preferred when a pixel map is installed.
 
-The editor automatically scales input coordinates to world units. This lets you enter real physical dimensions, which are automatically converted. As long as you use the same unit, you can input coordinates using inches, millimeters, pixels, etc. The world size will be calculated based on the limits of the map, and the coordinates will be converted to positions inside that world.
+Many patterns implement all 3 render variants and are universally compatible with any pixel map type.
 
-# Rendering with Pixel Maps
+# Coordinate World Units
 
-To use pixel map data, implement and export a render2D or render3D function. e.g. on a matrix this will show a fading rainbow gradient:
+The system automatically scales pixel map coordinates to 0.0 to 1.0 values. This represents the position within the mapped world.
 
-```
-export function render2D(index, x, y) {
-	hsv(x, 1, y)
-}
-```
+This lets you enter real physical dimensions, which are automatically converted. You can input coordinates using inches, millimeters, pixels, etc. The world size will be calculated based on the limits of the map, and the coordinates will be converted to positions inside that world.
 
-Likewise, render3D can produce a HSV volumetric cube showing all color capabilities:
+There are two options for how coordinates are scaled:
 
-```
-export function render3D(index, x, y, z) {
-	hsv(x, y, z)
-}
-```
+* Fill - If necessary, the map will be stretched or squished to fit every dimension.
+* Contain - The map keeps its aspect ratio, but is resized to fit the largest dimension.
 
-Note that x, y, z are all in "world units" and have values between 0.0 and 1.0 (exclusive).
 
-The world units work very similarly to using something like `index/pixelCount`, except its faster and with less code!
+# Using the Map Editor
 
-# JSON Array Map
+The editor supports either a JSON array of coordinates, or a JavaScript function that generates a coordinate array. Each element in the top level array represents a pixel. Within a pixel, an array with elements for the x, y, and optionally z coordinate.
 
-The editor can accept a plain JSON array of arrays or a JavaScript value that evaluates to one. Each element in the top level array represents a pixel. Within a pixel, an array with elements for the x, y, and optionally z coordinate.
+Changes to the editor, if valid, are applied live so you can quickly see how your changes affect the map. Both the map preview and the rendered pattern will use the updated coordinates.
+
+Once you are happy with the map, it can be saved and will be loaded again the next time Pixelblaze starts up.
+
+# Map Using a JSON Array
+
+The editor can accept a plain JSON format array of arrays. Each element in the top level array represents a pixel. Within a pixel, an array with elements for the x, y, and optionally z coordinate.
 
 For example here is a box with 4 pixels, one in each corner: top left, top right, bottom right, and finally bottom left.
 
@@ -52,7 +52,7 @@ For example here is a box with 4 pixels, one in each corner: top left, top right
 ]
 ```
 
-# Generated Map Using Javascript
+# Map Using JavaScript
 
 The editor can also run some JavaScript in your browser to generate a pixel map. This can be handy for generated or repetitive structures, but is not limited to those. You could combine arrays and generative structures in creative ways.
 
@@ -76,3 +76,26 @@ function (pixelCount) {
 }
 ```
 
+# Rendering with Pixel Maps
+
+Once a pixel map is configured, patterns can start using the coordinate information in pattern code.
+
+Each pixel is still rendered one at a time, but special render functions take arguments that give coordinate information. The default 1D `render(index)` takes just an integer pixel index, but `render2D(index, x, y)` and `render3D(index, x, y, z)` add additional coordinate information in "world units" - a value between 0.0 and 1.0.
+
+To use pixel map data, a pattern exports a render2D and/or render3D function. This happens in the pattern code, over on the Edit tab. e.g. on a matrix this will show a fading rainbow gradient:
+
+```
+export function render2D(index, x, y) {
+	hsv(x, 1, y)
+}
+```
+
+Likewise, render3D can produce a HSV volumetric cube showing all color capabilities:
+
+```
+export function render3D(index, x, y, z) {
+	hsv(x, y, z)
+}
+```
+
+Note that x, y, z are all in "world units" and have values between 0.0 and 1.0 (exclusive). By using "world units" patterns can be written for any possible configuration without having to know the size of the world.
