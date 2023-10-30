@@ -42,7 +42,7 @@ Some controls allow input, while others can be used to display some information.
 
 Create a control by exporting a function with a special name prefix (see below), folowed by the name you would like to use. CamelCase or snake_case can be used to separate words.
 
-Whenever input controls are changed, the function will be called with the new value. It will also be called with a saved value when the pattern is switched to before rendering occurs. To make use of this you may store the value or use it to calculate something used in your pattern.
+Whenever input controls are changed, the function will be called with the new value. It will also be called with a saved value when the pattern is switched to before rendering occurs. To make use of the control value you may store the value or use it to calculate some other variable(s) used in your pattern.
 
 Output controls work by calling the function and using the return value. These may be called very frequently to refresh the interface.
 
@@ -91,7 +91,7 @@ To create a trigger button, export a function that starts with the key word `tri
 
 `export function triggerFireLasers() {...}`
 
-Whenever the button is pressed, this function will be called. Unlike other input controls, this has no parameters and is not called when the patter first loads.
+Whenever the button is pressed, this function will be called. Unlike other input controls, this has no parameters and is not called when the pattern first loads.
 
 ### Inputs for Numbers
 
@@ -332,7 +332,7 @@ Causes perlin functions to wrap at the given integer intervals between 2 and 256
 
 #### hsv(`hue`, `saturation`, `value`)
 
-Sets the current pixel by calculating the RGB values based on the HSV color space. `Hue` "wraps" between 0.0 and 1.0. Negative values wrap backwards. For LEDs that support it, this uses 24-bit color plus an additional 5 bits of brightness control giving a high dynamic range especially at lower light levels and reduces posterization.
+Sets the current pixel by calculating the RGB values based on the HSV color space. `Hue` "wraps" between 0.0 and 1.0. Negative values wrap backwards. For LEDs that support it, this uses 24-bit color plus an additional 5 bits of brightness control, giving a high dynamic range especially at lower light levels and reducing posterization.
 
 #### hsv24(`hue`, `saturation`, `value`)
 
@@ -373,7 +373,7 @@ Applies an arbitrary 4x4 matrix transform.
 Move in 2D space.
 
 #### scale(`x`,`y`)
-Scale in 2D space. This increases the density of pixels, such that `scale(2,2)` will cause things to appear half as large.
+Scale in 2D space. This changes the density of pixels, such that `scale(2,2)` will cause things to appear half as large.
 
 #### rotate(`angleRads`)
 Rotate 2D space (around the Z axis), by an angle (in radians).
@@ -382,7 +382,7 @@ Rotate 2D space (around the Z axis), by an angle (in radians).
 Move in 3D space.
 
 #### scale3D(`x`, `y`, `z`)
-Scale in 3D space. This increases the density of pixels, such that `scale3D(2,2,2)` will cause things to appear half as large.
+Scale in 3D space. This changes the density of pixels, such that `scale3D(2,2,2)` will cause things to appear half as large.
 
 #### rotateX(`angleRads `)
 Rotate 3D space around the X axis by an angle (in radians).
@@ -411,18 +411,11 @@ For 2D and 3D maps the current coordinate transformations are applied before `fn
 
 ### Input / Output Functions
 
-#### readAdc()
-Reads the value from the ADC as a number between 0.0 and 1.0.
-***This function is only available on V2 devices***
-
 #### analogRead(`pin`)
 Reads the value from the pin as a number between 0.0 and 1.0.
-***This function is only available on V3 devices***
 
 #### pinMode(`pin`,`mode`)
 Set the pin mode as an `INPUT`, `INPUT_PULLUP`, `INPUT_PULLDOWN`, `OUTPUT`, `OUTPUT_OPEN_DRAIN`, or `ANALOG`.
-
-***V2 device notes:*** `INPUT_PULLUP` does not work for GP16, instead `INPUT_PULLDOWN_16` is supported. This can be used with a button, connected between GP16 and 3.3v. Pins will read `HIGH` or 1.0 while the button is pressed. On Pixelblaze V2+ pin GP12 is connected to the orange LED. GP2 is used for NeoPixel and WS2811/12/13 support and can't be used unless the trace on the bottom is cut.
 
 #### digitalWrite(`pin`,`state`)
 Set a pin `HIGH` or `LOW`. Any non-zero value will set the pin `HIGH`.
@@ -433,7 +426,7 @@ Read a pin state, returns 1.0 if the pin is `HIGH`, 0.0 for `LOW` otherwise.
 #### touchRead(`pin`)
 Detect touch and proximity on a pin using capacitive sensing techniques. Returns a value between 0.0 and 1.0 depending on how much capacitance is detected on the pin. 
 
-***V3 device notes:*** You can also specify one of these constants: T0, T2, T4, T6, T7.
+You can also specify one of these constants: T0, T2, T4, T6, T7.
 
 ### Clock / Time Functions
 
@@ -465,16 +458,11 @@ Returns the current mode. One of:
 * SEQ_OFF: 0
 * SEQ_SHUFFLE_ALL: 1
 * SEQ_PLAYLIST: 2
-* SEQ_SYNCHRONIZED: 3 //follower
+* SEQ_SYNCHRONIZED: 3 (Sync Group follower)
 
-#### playlistSetPosition()
-Returns the current index of the playlist (starts at 0)
+#### playlistGetPosition()
+Returns the current index of the playlist (starts at 0).
 #### playlistSetPosition(position)
-Wwitch to this item unless it’s already the playlist’s current position. When combined with `playlistGetPosition()`, this can be used to switch to the previous pattern.
+Switch to this item unless it’s already the playlist’s current position. When combined with `playlistGetPosition()`, this can be used to switch to the previous pattern.
 #### playlistGetLength() 
-Returns the number of items in the playlist
-
-
-
-
-
+Returns the number of items in the playlist.
