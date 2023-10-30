@@ -7,8 +7,8 @@
 3. [Language limitations](#toc_12)
 4. [Variables](#toc_13)
 5. [Constants](#toc_14)
-6. [Functions](#toc_15)
-7. [Expansion Board](#toc_109)
+6. [Expansion Board](#toc_15)
+7. [Functions](#toc_16)
 
 # Writing Patterns
 
@@ -164,6 +164,31 @@ Global variables can also be exported with the `export` keyword. These will be v
 # Constants
 
 `E` , `PI`, `PI2` (PI * 2), `PI3_4` (PI * 3 / 4), `PISQ` (PI * PI), `LN2`, `LN10`, `LOG2E`, `LOG10E`, `SQRT1_2`, `SQRT2`
+
+# Sensor Expansion Board
+
+Pixelblaze supports a sensor expansion board that adds:
+
+* A microphone and signal processing that gives:
+	* `frequencyData` - 32 element array with frequency magnitude data ranging from 12.5-10khz
+	* `energyAverage` - total audio volume
+	* `maxFrequency` and `maxFrequencyMagnitude` - detects the strongest tones with resolution of about 39Hz
+* A 3-axis 16G `accelerometer` - 3 element array with [x,y,z]
+* An ambient light sensor - `light` can be used to automatically dim displays for nightlights
+* 5 `analogInputs` - 5 element array with analog values from A0-A4
+
+Each of these can be accessed in a pattern by using the `export var` syntax, with optional defaults if the board is not connected.
+
+```
+export var frequencyData
+export var energyAverage
+export var maxFrequencyMagnitude
+export var maxFrequency
+export var accelerometer
+export var light
+export var analogInputs
+
+```
 
 # Functions
 
@@ -429,30 +454,26 @@ Sunday = 1, Monday = 2, etc.
 #### nodeId()
 Returns the integer node ID as configured in settings. This can be used to change the behavior within a group.
 
-# Sensor Expansion Board
+### Sequencer / Playlist Functions
+These functions allow a pattern to control what pattern is currently playing.
 
-Pixelblaze supports a sensor expansion board that adds:
+#### sequencerNext()
+Advance to next pattern, the same as button press. Works in any sequencer mode. 
+#### sequencerGetMode()
+Returns the current mode. One of:
 
-* A microphone and signal processing that gives:
-	* `frequencyData` - 32 element array with frequency magnitude data ranging from 12.5-10khz
-	* `energyAverage` - total audio volume
-	* `maxFrequency` and `maxFrequencyMagnitude` - detects the strongest tones with resolution of about 39Hz
-* A 3-axis 16G `accelerometer` - 3 element array with [x,y,z]
-* An ambient light sensor - `light` can be used to automatically dim displays for nightlights
-* 5 `analogInputs` - 5 element array with analog values from A0-A4
+* SEQ_OFF: 0
+* SEQ_SHUFFLE_ALL: 1
+* SEQ_PLAYLIST: 2
+* SEQ_SYNCHRONIZED: 3 //follower
 
-Each of these can be accessed in a pattern by using the `export var` syntax, with optional defaults if the board is not connected.
+#### playlistSetPosition()
+Returns the current index of the playlist (starts at 0)
+#### playlistSetPosition(position)
+Wwitch to this item unless it’s already the playlist’s current position. When combined with `playlistGetPosition()`, this can be used to switch to the previous pattern.
+#### playlistGetLength() 
+Returns the number of items in the playlist
 
-```
-export var frequencyData
-export var energyAverage
-export var maxFrequencyMagnitude
-export var maxFrequency
-export var accelerometer
-export var light
-export var analogInputs
-
-```
 
 
 
