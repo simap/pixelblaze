@@ -1,0 +1,5 @@
+ElectroMage PB Enclosure Variants © 2024 by Jeff Vyduna and ElectroMage is licensed under CC BY-NC-SA 4.0 with the following exception:
+
+If you modify this work primarily for use with an ElectroMage Pixelblaze LED controller, you are hereby granted a license under CC BY-SA 4.0.
+
+We thank you and request notification at support@electromage.com if you share or adapt this for use in a commercial product.

@@ -1,0 +1,11 @@
+Many slicers have a "gap closing" feature, to heal small gaps.
+
+On Prusa and Bambu slicer, this setting is called "Slice gap closing radius", and is found under the Quality tab -> Precision heading.
+
+The snap-outs in this design require changing this from the default of 0.049 mm to 0.02 mm in order to print with the right semi-fused thin gaps.
+
+These gaps are optimized for PLA and have not been tested with other filaments.
+
+They are optimized for 0.2 mm layer height and 0.42 mm line width, which are common defaults.
+
+The version with a shelf works best with manual (default style) support painted under the shelf. Disable all other supports - they're not needed if your printer can handle 45 degree overhangs and typical bridging.
