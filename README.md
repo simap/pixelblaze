@@ -1,6 +1,6 @@
 # Pixelblaze
 
-This repo includes open source information related to [Pixelblaze](https://www.bhencke.com/pixelblaze).
+This repo includes open source information related to [Pixelblaze](https://electromage.com/pixelblaze).
 
 * [Pattern code Reference](README.expressions.md)
 * [Mapper code Reference](README.mapper.md)
